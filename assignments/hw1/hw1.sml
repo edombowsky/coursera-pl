@@ -1,3 +1,6 @@
+val DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]   (* Does not take into account leap years *)
+val MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
 (* -------------------------------------------------------------*)
 (* Question 1                                                   *)
 (* -------------------------------------------------------------*)
@@ -29,23 +32,6 @@ fun number_in_month(dates: (int*int*int) list, month: int) =
       if #2 (hd dates) = month
       then 1 + number_in_month(tl dates, month)
       else number_in_month(tl dates, month)
-
-(*
-fun number_in_month (datelist : (int*int*int) list, month : int)  =
-   let
-      fun count (x : int , datelist : (int*int*int) list) =
-         if null (tl datelist)
-         then
-            if #2(hd datelist) <> month
-            then x
-            else x+1
-         else if #2(hd datelist) = month
-         then count (x+1, tl datelist)
-         else count (x, tl datelist)
-   in
-      count (0, datelist)
-   end
-*)
 
 (* -------------------------------------------------------------*)
 (* Quest 3                                                      *)

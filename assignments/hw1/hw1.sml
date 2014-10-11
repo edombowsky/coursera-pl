@@ -1,5 +1,28 @@
+(* Programming Languages (Coursera / University of Washington) Assignment 1 *)
+
+(*
+   You will write 11 SML functions (and tests for them) related to calendar
+   dates. In all problems, a "date" is an SML value of type int*int*int, where
+   the fist part is the year, the second part is the month, and the third part
+   is the day. A "reasonable" date has a positive year, a month between 1 and 12,
+   and a day no greater than 31 (or less depending on the month). Your solutions
+   need to work correctly only for reasonable dates, but do not check for
+   reasonable dates (that is a challenge problem) and many of your functions will
+   naturally work correctly for some/all non-reasonable dates. A "day of year"
+   is a number from 1 to 365 where, for example, 33 represents February 2.
+   (We ignore leap years except in one challenge problem.)
+*)
+
 val DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]   (* Does not take into account leap years *)
 val MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+(* For convenience, date is a 3-tuple int*int*int *)
+type Date = int * int * int
+
+(* Also for convenience, this way more legible code is achieved *)
+fun year  (d : Date) = #1 d
+fun month (d : Date) = #2 d
+fun day   (d : Date) = #3 d
 
 (* -------------------------------------------------------------*)
 (* Question 1                                                   *)
@@ -11,10 +34,16 @@ val MONTHS = ["January", "February", "March", "April", "May", "June", "July", "A
  * is a date that comes before the second argument. (If the two
  * dates are the same, the result is false.)
  *)
-fun is_older(date1:int*int*int, date2:int*int*int) =
+fun is_older(date1 : Date, date2 : Date) =
+    (year date1 < year date2) orelse
+    ((year date1 = year date2) andalso (month date1 < month date2)) orelse
+    ((year date1 = year date2) andalso (month date1 = month date2) andalso (day date1 < day date2))
+
+(*
     (#1 date1 < #1 date2) orelse
     ((#1 date1 = #1 date2) andalso (#2 date1 < #2 date2)) orelse
     ((#1 date1 = #1 date2) andalso (#2 date1 = #2 date2) andalso (#3 date1 < #3 date2))
+*)
 
 (* -------------------------------------------------------------*)
 (* Quest 2                                                      *)
@@ -25,7 +54,7 @@ fun is_older(date1:int*int*int, date2:int*int*int) =
  * and a month (i.e., an int) and returns how many dates in the
  * list are in the given month.
 *)
-fun number_in_month(dates: (int*int*int) list, month: int) =
+fun number_in_month(dates: (Date) list, month: int) =
    if null dates
    then 0
    else

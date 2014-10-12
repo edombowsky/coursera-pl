@@ -36,9 +36,9 @@ fun day   (d : Date) = #3 d
  * dates are the same, the result is false.)
  *)
 fun is_older(date1 : Date, date2 : Date) =
-    (#1 date1 < #1 date2) orelse
-    ((#1 date1 = #1 date2) andalso (#2 date1 < #2 date2)) orelse
-    ((#1 date1 = #1 date2) andalso (#2 date1 = #2 date2) andalso (#3 date1 < #3 date2))
+  (#1 date1 < #1 date2) orelse
+  ((#1 date1 = #1 date2) andalso (#2 date1 < #2 date2)) orelse
+  ((#1 date1 = #1 date2) andalso (#2 date1 = #2 date2) andalso (#3 date1 < #3 date2))
 
 (* -------------------------------------------------------------*)
 (* Quest 2                                                      *)
@@ -50,12 +50,9 @@ fun is_older(date1 : Date, date2 : Date) =
  * list are in the given month.
 *)
 fun number_in_month(dates: Date list, month: int) =
-   if null dates
-   then 0
-   else
-      if #2 (hd dates) = month
-      then 1 + number_in_month(tl dates, month)
-      else number_in_month(tl dates, month)
+   if null dates then 0
+   else if #2 (hd dates) = month then 1 + number_in_month(tl dates, month)
+        else number_in_month(tl dates, month)
 
 
 (* -------------------------------------------------------------*)
@@ -72,8 +69,7 @@ fun number_in_month(dates: Date list, month: int) =
  * your answer to the previous problem.
  *)
 fun number_in_months(dates: Date list, months: int list) =
-   if null dates orelse null months 
-   then 0
+   if null dates orelse null months then 0
    else number_in_month(dates, hd months) + number_in_months(dates, tl months)      
 
 
@@ -88,6 +84,11 @@ fun number_in_months(dates: Date list, months: int list) =
  * The returned list should contain dates in the order they were
  * originally given.
  *)
+fun dates_in_month(dates: Date list, month: int) =
+   if null dates
+   then []
+   else if #2 (hd dates) = month then hd dates :: dates_in_month(tl dates, month)
+        else dates_in_month(tl dates, month)
 
 (* -------------------------------------------------------------*)
 (* Quest 5                                                      *)
@@ -101,6 +102,8 @@ fun number_in_months(dates: Date list, months: int list) =
  * of months has no number repeated. Hint: Use your answer to
  * the previous problem and SML's list-append operator (@).
  *)
+fun dates_in_months(dates: Date, months: int list) =
+   if 
 
 (* -------------------------------------------------------------*)
 (* Quest 6                                                      *)

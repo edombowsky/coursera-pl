@@ -6,7 +6,7 @@
 use "hw1.sml";
 
 (* is_older *)
-val test1 = is_older((1,2,3),(2,3,4)) = true    (* test case given *)
+val test1 = is_older((1,2,3),(2,3,4)) = true
 
 val oldest_date = (1, 1, 1);
 
@@ -20,7 +20,7 @@ val test1_6  = not(is_older((2, 1, 1), oldest_date))   = true
 val test1_7  = not(is_older(oldest_date, oldest_date)) = true
 
 val test1_8  = is_older((2000,01,01),(1998,10,01)) = false
-val vtest_9  = is_older((2000,01,01),(2000,02,01)) = true
+val test_9  = is_older((2000,01,01),(2000,02,01)) = true
 val test1_10 = is_older((2000,01,01),(2000,01,02)) = true
 val test1_11 = is_older((2000,01,01),(2000,01,01)) = false
 
@@ -33,7 +33,7 @@ val test1_17 = is_older((2012,02,03),(2012,02,02)) = false  (* date1 year before
 val test1_18 = is_older((2012,02,02),(2012,02,04)) = true   (* date1 year before date2 year val test_1 = true : bool *)
 
 (* number_in_month *)
-val test2 = number_in_month([(2012,2,28),(2013,12,1)],2) = 1    (* test case given *)
+val test2 = number_in_month([(2012,2,28),(2013,12,1)],2) = 1
 
 val test2_1 = number_in_month([(2012,01,01),(2012,02,01),(2012,01,13),(2012,01,05),(2012,06,01)], 1) = 3
 val test2_2 = number_in_month([], 1) = 0
@@ -43,9 +43,15 @@ val test2_4 = number_in_month([(2012,01,01),(2012,02,01),(2012,01,13),(2012,01,0
 val test2_5 = number_in_month([(2013,09,10),(2013,09,41),(2013,09,51)], 1)               = 0  (* val num1 = 0 : int *)
 val test2_6 = number_in_month([(2013,09,10),(2013,09,41),(2013,09,51),(2013,09,20)], 9)  = 4  (* val num1 = 4 : int *)
 val test2_7 = number_in_month([(2013,02,31),(2013,09,41),(2013,09,51),(2013,09,20)], 02) = 1  (* val num1 = 1 : int *)
-(*
+
 (* number_in_months *)
-val test3 = number_in_months([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,3,4]) = 3    (* test case given *)
+val test3 = number_in_months([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,3,4]) = 3
+
+val test3_1 = number_in_months([], [2]) = 0
+val test3_2 = number_in_months([(2012,2,28)],[]) = 0
+val test3_3 = number_in_months([(2012,2,28)],[1,3]) = 0
+
+(*
 
 (* dates_in_month *)
 val test4 = dates_in_month([(2012,2,28),(2013,12,1)],2) = [(2012,2,28)]    (* test case given *)

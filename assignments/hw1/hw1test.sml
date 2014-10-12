@@ -64,22 +64,26 @@ val test5_1 = dates_in_months([], []) = []
 val test5_2 = dates_in_months([(2014,10,10)], []) = []
 val test5_3 = dates_in_months([], [1,2]) = []
 
-(*
 (* get_nth *)
-val test6 = get_nth(["hi", "there", "how", "are", "you"], 2) = "there"    (* test case given *)
+val test6 = get_nth(["hi", "there", "how", "are", "you"], 2) = "there"
+
+val test6_1 = get_nth(["hi", "there", "how", "are", "you"], 0) = ""
+(*jmval test6_2 = get_nth(["one"], 2)*)
+
+(*
 
 (* date_to_string *)
-val test7 = date_to_string((2013, 6, 1)) = "June 1, 2013"    (* test case given *)
+val test7 = date_to_string((2013, 6, 1)) = "June 1, 2013"
 
 (* number_before_reaching_sum *)
-val test8 = number_before_reaching_sum(10, [1,2,3,4,5]) = 3    (* test case given *)
+val test8 = number_before_reaching_sum(10, [1,2,3,4,5]) = 3
 
 (* what_month *)
-val test9 = what_month(70) = 3    (* test case given *)
+val test9 = what_month(70) = 3
 
 (* month_range *)
-val test10 = month_range(31, 34) = [1,2,2,2]    (* test case given *)
+val test10 = month_range(31, 34) = [1,2,2,2]
 
 (* oldest *)
-val test11 = oldest([(2012,2,28),(2011,3,31),(2011,4,28)]) = SOME (2011,3,31)    (* test case given *)
+val test11 = oldest([(2012,2,28),(2011,3,31),(2011,4,28)]) = SOME (2011,3,31)
 *)

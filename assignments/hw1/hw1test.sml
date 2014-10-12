@@ -57,11 +57,14 @@ val test4 = dates_in_month([(2012,2,28),(2013,12,1)],2) = [(2012,2,28)]
 val test4_1 = dates_in_month([(2012,2,28), (2013,12,1)], 3) = []
 val test4_2 = dates_in_month([], 3) = []
 
-(*
-
 (* dates_in_months *)
 val test5 = dates_in_months([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,3,4]) = [(2012,2,28),(2011,3,31),(2011,4,28)]    (* test case given *)
 
+val test5_1 = dates_in_months([], []) = []
+val test5_2 = dates_in_months([(2014,10,10)], []) = []
+val test5_3 = dates_in_months([], [1,2]) = []
+
+(*
 (* get_nth *)
 val test6 = get_nth(["hi", "there", "how", "are", "you"], 2) = "there"    (* test case given *)
 

@@ -85,10 +85,10 @@ fun number_in_months(dates: Date list, months: int list) =
  * originally given.
  *)
 fun dates_in_month(dates: Date list, month: int) =
-   if null dates
-   then []
+   if null dates then []
    else if #2 (hd dates) = month then hd dates :: dates_in_month(tl dates, month)
         else dates_in_month(tl dates, month)
+
 
 (* -------------------------------------------------------------*)
 (* Quest 5                                                      *)
@@ -102,8 +102,10 @@ fun dates_in_month(dates: Date list, month: int) =
  * of months has no number repeated. Hint: Use your answer to
  * the previous problem and SML's list-append operator (@).
  *)
-fun dates_in_months(dates: Date, months: int list) =
-   if 
+fun dates_in_months(dates: Date list, months: int list) =
+   if null dates orelse null months then []
+   else dates_in_month(dates, hd months) @ dates_in_months(dates, tl months)
+
 
 (* -------------------------------------------------------------*)
 (* Quest 6                                                      *)

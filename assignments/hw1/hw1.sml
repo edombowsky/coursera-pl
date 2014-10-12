@@ -152,6 +152,10 @@ fun date_to_string(date: Date) =
  * than the passed in value; it is okay for an exception to occur
  * if this is not the case.
  *)
+fun number_before_reaching_sum(sum: int, numbers: int list) =
+   if sum <= hd numbers then 0
+   else 1 + number_before_reaching_sum(sum - hd numbers, tl numbers)
+      
 
 (* -------------------------------------------------------------*)
 (* Quest 9                                                      *)

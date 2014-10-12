@@ -20,11 +20,6 @@ val MONTHS = ["January", "February", "March", "April", "May", "June", "July",
 (* For convenience, date is a 3-tuple int*int*int *)
 type Date = int * int * int
 
-(* Also for convenience, this way more legible code is achieved *)
-fun year  (d : Date) = #1 d
-fun month (d : Date) = #2 d
-fun day   (d : Date) = #3 d
-
 (* -------------------------------------------------------------*)
 (* Question 1                                                   *)
 (* -------------------------------------------------------------*)
@@ -139,6 +134,9 @@ fun get_nth(strings: string list, n: int) =
  * April, May, June, July, August, September, October, November,
  * December.
  *)
+fun date_to_string(date: Date) =
+   get_nth(MONTHS, #2 date) ^ " " ^ Int.toString(#3 date) ^ ", " ^ Int.toString(#1 date)
+
 
 (* -------------------------------------------------------------*)
 (* Quest 8                                                      *)

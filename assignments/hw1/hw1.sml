@@ -181,7 +181,7 @@ fun what_month(day_of_year: int) =
  * is the month of day1, m2 is the month of day1+1, ..., and mn
  * is the month of day day2. Note the result will have length
  * day2 - day1 + 1 or length 0 if day1>day2.
-*)
+ *)
 fun month_range(day1: int, day2: int) =
    if day1 > day2 then []
    else what_month(day1) :: month_range(day1 + 1, day2)
@@ -212,13 +212,20 @@ fun oldest(dates: Date list) =
 (* -------------------------------------------------------------*)
 (* Question 12: Challenge problem                               *)
 (* -------------------------------------------------------------*)
-(* Checks if x is contained in the xs list: int * int list -> bool *)
+(*
+ * Challenge Problem: Write functions number_in_months_challenge and 
+ * dates_in_months_challenge that are like your solutions to problems 3 and 5 
+ * except having a month in the second argument multiple times has no more effect 
+ * than having it once. (Hint: Remove duplicates, then use previous work.)
+ *)
+
+(* Checks if x is contained in the xs list *)
 fun contains(x : int, xs : int list) =
    if null xs then false
    else if hd xs = x then true
    else contains(x, tl xs)
 
-(* Removes duplicates from a given list: int list -> int list *)
+(* Removes duplicates from a given list *)
 fun remove_dups(xs : int list) =
    let
       fun iter (xs : int list, ys : int list) =

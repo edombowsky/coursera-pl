@@ -182,6 +182,10 @@ fun what_month(day_of_year: int) =
  * is the month of day day2. Note the result will have length
  * day2 - day1 + 1 or length 0 if day1>day2.
 *)
+fun month_range(day1: int, day2: int) =
+   if day1 > day2 then []
+   else what_month(day1) :: month_range(day1 + 1, day2)
+
 
 (* -------------------------------------------------------------*)
 (* Quest 11                                                     *)

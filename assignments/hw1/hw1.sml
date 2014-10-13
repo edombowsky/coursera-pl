@@ -213,10 +213,10 @@ fun oldest(dates: Date list) =
 (* Question 12: Challenge problem                               *)
 (* -------------------------------------------------------------*)
 (*
- * Challenge Problem: Write functions number_in_months_challenge and 
- * dates_in_months_challenge that are like your solutions to problems 3 and 5 
- * except having a month in the second argument multiple times has no more effect 
- * than having it once. (Hint: Remove duplicates, then use previous work.)
+ * Write functions number_in_months_challenge and dates_in_months_challenge that
+ * are like your solutions to problems 3 and 5 except having a month in the
+ * second argument multiple times has no more effect than having it once. 
+ * (Hint: Remove duplicates, then use previous work.)
  *)
 
 (* Checks if x is contained in the xs list *)
@@ -245,3 +245,34 @@ fun number_in_months_challenge(dates: Date list, months : int list) =
 fun dates_in_months_challenge (dates : Date list, months : int list) =
    if null dates orelse null months then [ ]
    else dates_in_months(dates, remove_dups(months))
+
+
+(* -------------------------------------------------------------*)
+(* Question 13: Challenge problem                               *)
+(* -------------------------------------------------------------*)
+
+(*
+ * Write a function reasonable_date that takes a date and determines if it
+ * describes a real date in the common era. A \real date" has a positive year
+ * (year 0 did not exist), a month between 1 and 12, and a day appropriate for
+ * the month. Solutions should properly handle leap years. Leap years are years
+ * that are either divisible by 400 or divisible by 4 but not divisible by 100.
+ * (Do not worry about days possibly lost in the conversion to the Gregorian
+ * calendar in the Late 1500s.)
+*)
+fun reasonable_date (dt: Date) =
+   let
+      fun leap_year (y: int) =
+         y mod 400 = 0 orelse (y mod 100 <> 0 andalso y mod 4 = 0)
+   
+      fun index (xs: int list, n: int) =
+         if n = 1 then hd xs else index(tl xs, n - 1)
+   
+      val y = #1 dt
+      val m = #2 dt
+      val d = #3 dt
+   in
+      if y < 1 orelse m < 1 orelse m > 12 orelse d < 1 orelse d > 31 then false
+      else if leap_year y andalso m = 2 then d <= 29
+      else d <= index(DAYS_IN_MONTH, m)
+   end

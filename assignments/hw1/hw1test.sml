@@ -120,18 +120,26 @@ val ms2 = [9, 11, 6];
 val ms3 = [2, 3, 4, 6, 8, 10];
 val ms4 = [10, 7];
 
-val check12_1 = number_in_months_challenge(ds, ms1) = number_in_months(ds, ms1);
-val check12_2 = number_in_months_challenge(ds, ms2) = number_in_months(ds, ms2);
-val check12_3 = number_in_months_challenge(ds, ms3) = number_in_months(ds, ms3);
-val check12_4 = number_in_months_challenge(ds, ms1 @ ms1) = number_in_months(ds, ms1);
-val check12_5 = number_in_months_challenge(ds, ms2 @ ms2) = number_in_months(ds, ms2);
-val check12_6 = number_in_months_challenge(ds, ms3 @ ms3) = number_in_months(ds, ms3);
+val check12_1 = number_in_months_challenge(ds, ms1) = number_in_months(ds, ms1) = true
+val check12_2 = number_in_months_challenge(ds, ms2) = number_in_months(ds, ms2) = true
+val check12_3 = number_in_months_challenge(ds, ms3) = number_in_months(ds, ms3) = true
+val check12_4 = number_in_months_challenge(ds, ms1 @ ms1) = number_in_months(ds, ms1) = true
+val check12_5 = number_in_months_challenge(ds, ms2 @ ms2) = number_in_months(ds, ms2) = true
+val check12_6 = number_in_months_challenge(ds, ms3 @ ms3) = number_in_months(ds, ms3) = true
 
-val check12_7 = dates_in_months_challenge(ds, ms1) = dates_in_months(ds, ms1);
-val check12_8 = dates_in_months_challenge(ds, ms2) = dates_in_months(ds, ms2);
-val check12_9 = dates_in_months_challenge(ds, ms3) = dates_in_months(ds, ms3);
-val check12_10 = dates_in_months_challenge(ds, ms4) = dates_in_months(ds, ms4);
-val check12_11 = dates_in_months_challenge(ds, ms1 @ ms1)=dates_in_months(ds, ms1);
-val check12_12 = dates_in_months_challenge(ds, ms2 @ ms2)=dates_in_months(ds, ms2);
-val check12_13 = dates_in_months_challenge(ds, ms3 @ ms3)=dates_in_months(ds, ms3);
-val check12_14 = dates_in_months_challenge(ds, ms4 @ ms4)=dates_in_months(ds, ms4);
+val check12_7 = dates_in_months_challenge(ds, ms1) = dates_in_months(ds, ms1) = true
+val check12_8 = dates_in_months_challenge(ds, ms2) = dates_in_months(ds, ms2) = true
+val check12_9 = dates_in_months_challenge(ds, ms3) = dates_in_months(ds, ms3) = true
+val check12_10 = dates_in_months_challenge(ds, ms4) = dates_in_months(ds, ms4) = true
+val check12_11 = dates_in_months_challenge(ds, ms1 @ ms1)=dates_in_months(ds, ms1) = true
+val check12_12 = dates_in_months_challenge(ds, ms2 @ ms2)=dates_in_months(ds, ms2) = true
+val check12_13 = dates_in_months_challenge(ds, ms3 @ ms3)=dates_in_months(ds, ms3) = true
+val check12_14 = dates_in_months_challenge(ds, ms4 @ ms4)=dates_in_months(ds, ms4) = true
+
+val check13_1 = reasonable_date(d1) = true
+val check13_2= reasonable_date(d2) = true
+val check13_3 = reasonable_date(d3) = true
+val check13_4 = reasonable_date(d4) = true
+val check13_5 = reasonable_date((~10, 1, 1)) = false
+val check13_6 = reasonable_date((1900, 2, 29)) = false
+val check13_7 = reasonable_date((1904, 2, 29)) = true

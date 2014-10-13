@@ -207,3 +207,34 @@ fun oldest(dates: Date list) =
          else
             SOME(hd dates)
       end
+
+
+(* -------------------------------------------------------------*)
+(* Question 12: Challenge problem                               *)
+(* -------------------------------------------------------------*)
+(* Checks if x is contained in the xs list: int * int list -> bool *)
+fun contains(x : int, xs : int list) =
+   if null xs then false
+   else if hd xs = x then true
+   else contains(x, tl xs)
+
+(* Removes duplicates from a given list: int list -> int list *)
+fun remove_dups(xs : int list) =
+   let
+      fun iter (xs : int list, ys : int list) =
+         if null xs then ys
+         else if contains(hd xs, ys) then iter(tl xs, ys)
+         else iter(tl xs, ys @ [hd xs])
+   in
+      iter(xs, [ ])
+   end
+
+(* number_in_months_challenge *)
+fun number_in_months_challenge(dates: Date list, months : int list) =
+   if null dates orelse null months then 0
+   else number_in_months(dates, remove_dups(months))
+
+(* dates_in_montsh_challenge *)
+fun dates_in_months_challenge (dates : Date list, months : int list) =
+   if null dates orelse null months then [ ]
+   else dates_in_months(dates, remove_dups(months))

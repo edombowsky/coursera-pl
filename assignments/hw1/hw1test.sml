@@ -96,3 +96,42 @@ val check10_4 = month_range(85, 95) = [3,3,3,3,3,3,4,4,4,4,4]
 val test11 = oldest([(2012,2,28),(2011,3,31),(2011,4,28)]) = SOME (2011,3,31)
 
 val test11_1 = oldest([]) = NONE
+
+val test_contains_1 = contains(1, [1, 2, 3]) = true
+val test_contains_2 = contains(4, [1, 2, 3]) = false
+
+val test_remove_dups_1 = remove_dups([1, 2, 3]) = [1, 2, 3]
+val test_remove_dups_2 = remove_dups([1, 1, 1]) = [1]
+val test_remove_dups_3 = remove_dups([1, 1, 2]) = [1, 2]
+val test_remove_dups_4 = remove_dups([]) = []
+
+
+(* -------------------------------------------------------------*)
+(* Tests for challenge problems                                 *)
+(* -------------------------------------------------------------*)
+
+val d1 = (1988, 9, 29);
+val d2 = (2001, 9, 11);
+val d3 = (2013, 1, 14);
+val d4 = (1997, 7, 17);
+val ds = [d1, d2, d3, d4];
+val ms1 = [1, 9];
+val ms2 = [9, 11, 6];
+val ms3 = [2, 3, 4, 6, 8, 10];
+val ms4 = [10, 7];
+
+val check12_1 = number_in_months_challenge(ds, ms1) = number_in_months(ds, ms1);
+val check12_2 = number_in_months_challenge(ds, ms2) = number_in_months(ds, ms2);
+val check12_3 = number_in_months_challenge(ds, ms3) = number_in_months(ds, ms3);
+val check12_4 = number_in_months_challenge(ds, ms1 @ ms1) = number_in_months(ds, ms1);
+val check12_5 = number_in_months_challenge(ds, ms2 @ ms2) = number_in_months(ds, ms2);
+val check12_6 = number_in_months_challenge(ds, ms3 @ ms3) = number_in_months(ds, ms3);
+
+val check12_7 = dates_in_months_challenge(ds, ms1) = dates_in_months(ds, ms1);
+val check12_8 = dates_in_months_challenge(ds, ms2) = dates_in_months(ds, ms2);
+val check12_9 = dates_in_months_challenge(ds, ms3) = dates_in_months(ds, ms3);
+val check12_10 = dates_in_months_challenge(ds, ms4) = dates_in_months(ds, ms4);
+val check12_11 = dates_in_months_challenge(ds, ms1 @ ms1)=dates_in_months(ds, ms1);
+val check12_12 = dates_in_months_challenge(ds, ms2 @ ms2)=dates_in_months(ds, ms2);
+val check12_13 = dates_in_months_challenge(ds, ms3 @ ms3)=dates_in_months(ds, ms3);
+val check12_14 = dates_in_months_challenge(ds, ms4 @ ms4)=dates_in_months(ds, ms4);

@@ -78,11 +78,14 @@ val test8_1 = number_before_reaching_sum(10, [11, 1, 13]) = 0
 val test8_2 = number_before_reaching_sum(14, [11, 1, 13]) = 2
 val test8_3 = number_before_reaching_sum(1,  [1, 2, 3])   = 0
 
-(*
-
-
 (* what_month *)
 val test9 = what_month(70) = 3
+
+val test9_1 = what_month(1) = 1
+val test9_2 = what_month(365) = 12
+
+
+(*
 
 (* month_range *)
 val test10 = month_range(31, 34) = [1,2,2,2]

@@ -155,7 +155,7 @@ fun date_to_string(date: Date) =
 fun number_before_reaching_sum(sum: int, numbers: int list) =
    if sum <= hd numbers then 0
    else 1 + number_before_reaching_sum(sum - hd numbers, tl numbers)
-      
+
 
 (* -------------------------------------------------------------*)
 (* Quest 9                                                      *)
@@ -167,6 +167,9 @@ fun number_before_reaching_sum(sum: int, numbers: int list) =
  * (1 for January, 2 for February, etc.). Use a list holding 12
  * integers and your answer to the previous problem.
  *)
+fun what_month(day_of_year: int) =
+   number_before_reaching_sum(day_of_year, DAYS_IN_MONTH) + 1
+
 
 (* -------------------------------------------------------------*)
 (* Quest 10                                                     *)

@@ -92,7 +92,7 @@ val check10_2 = month_range(101, 101) = [4]
 val check10_3 = month_range(304, 305) = [10, 11]
 val check10_4 = month_range(85, 95) = [3,3,3,3,3,3,4,4,4,4,4]
 
-(*
 (* oldest *)
 val test11 = oldest([(2012,2,28),(2011,3,31),(2011,4,28)]) = SOME (2011,3,31)
-*)
+
+val test11_1 = oldest([]) = NONE

@@ -194,5 +194,16 @@ fun month_range(day1: int, day2: int) =
 (*
  * Write a function oldest that takes a list of dates and evaluates
  * to an (int*int*int) option. It evaluates to NONE if the list has
- *  no dates and SOME d if the date d is the oldest date in the list.
+ * no dates and SOME d if the date d is the oldest date in the list.
  *)
+fun oldest(dates: Date list) =
+   if null dates then NONE
+   else  
+      let
+         val old = oldest(tl dates)
+      in
+         if isSome old andalso is_older(valOf old, hd dates) then
+            old
+         else
+            SOME(hd dates)
+      end

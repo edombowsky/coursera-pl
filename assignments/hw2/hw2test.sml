@@ -3,8 +3,19 @@
 (* To run the test, add a new line to the top of this file: use "homeworkname.sml"; *)
 (* All the tests should evaluate to true. For example, the REPL should say: val test1 = true : bool *)
 
+use "hw2provided.sml";
+
+val str_list1 = ["strings", "are", "fun"]
+val str_list2 = ["fun", "are", "strings"]
+val str_list3 = ["fun", "are"]
+
 val test1 = all_except_option("string", ["string"]) = SOME []
 
+val test1_1 = all_except_option("strings", str_list1) = SOME ["are", "fun"]
+val test1_2 = all_except_option("strings", str_list2) = SOME ["fun", "are"]
+val test1_3 = all_except_option("strings", str_list3) = NONE
+
+(*
 val test2 = get_substitutions1([["foo"],["there"]], "foo") = []
 
 val test3 = get_substitutions2([["foo"],["there"]], "foo") = []
@@ -37,5 +48,4 @@ val test13 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
                          42);
                false) 
               handle IllegalMove => true)
-             
-             
+*)

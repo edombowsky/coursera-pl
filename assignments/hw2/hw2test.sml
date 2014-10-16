@@ -9,6 +9,7 @@ val str_list1 = ["strings", "are", "fun"]
 val str_list2 = ["fun", "are", "strings"]
 val str_list3 = ["fun", "are"]
 
+(* all_except_one *)
 val test1 = all_except_option("string", ["string"]) = SOME []
 
 val test1_1 = all_except_option("strings", str_list1) = SOME ["are", "fun"]

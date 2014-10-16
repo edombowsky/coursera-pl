@@ -43,7 +43,17 @@ fun same_string(s1 : string, s2 : string) =
  * provided to you, to compare strings. Sample solution is around 8 lines.
  *)
 fun all_except_option(str: string, string_list: string list) =
-   SOME ["fun", "are"]
+   let
+      fun remove_from_list (str_to_remove, remaining_list) =
+         case remaining_list of
+            [] => []
+            | x :: xs => if same_string(x, str_to_remove) then xs
+                         else x :: remove_from_list(str_to_remove, xs)
+
+         val filtered_list = remove_from_list(str, string_list)
+      in
+         if filtered_list = string_list then NONE else SOME filtered_list
+      end
 
 (*
  * (b) Write a function get_substitutions1, which takes a string list list (a

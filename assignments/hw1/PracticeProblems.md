@@ -1,5 +1,5 @@
 ## Practice Problems for Section 1
-<https://class.coursera.org/proglang-003/forum/thread?thread_id=198>
+_<https://class.coursera.org/proglang-003/forum/thread?thread_id=198>_
 
 ### Positive Numbers
 

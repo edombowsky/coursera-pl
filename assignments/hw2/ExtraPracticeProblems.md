@@ -1,5 +1,5 @@
 ## Extra Practice Problems for Section 2
-<https://class.coursera.org/proglang-003/forum/thread?thread_id=392>
+_<https://class.coursera.org/proglang-003/forum/thread?thread_id=392>_
 
 I thought I would make a list of some extra problems to work on for any of you who are looking for more to do after completing the assignment. I will not be providing solutions, but I encourage people to discuss them in this thread, without revealing way too much.
 

@@ -1,5 +1,5 @@
 ## Extra Practice Problems for Section 1
-<https://class.coursera.org/proglang-003/forum/thread?thread_id=300>
+_<https://class.coursera.org/proglang-003/forum/thread?thread_id=300>_
 
 1. Write a function `alternate(nums : int list) -> int` that takes a list of numbers and adds them with alternating sign. For example `alternate([1,2,3,4]) = 1 - 2 + 3 - 4 = -2`
 2. Write a version of `date_to_string` that writes `1st`, `2nd`, `3rd` etc for the day, instead of just `1`, `2`, `3`

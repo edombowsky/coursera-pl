@@ -1,5 +1,5 @@
 ## Practice Problems for Section 2 -- Tests
-<https://class.coursera.org/proglang-003/forum/thread?thread_id=489>
+_<https://class.coursera.org/proglang-003/forum/thread?thread_id=489>_
 
 ``` sml
 (* All tests should evaluate to true. *)

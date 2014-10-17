@@ -1,4 +1,5 @@
 ## Practice Problems for Section 2
+_<https://class.coursera.org/proglang-003/forum/thread?thread_id=488>_
 
 ### 38 Cons Cells (*)
 

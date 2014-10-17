@@ -1,5 +1,5 @@
-## Practice Problems for Section 1 -- Solutions
-<https://class.coursera.org/proglang-003/forum/thread?thread_id=200>
+## Practice Problems for Section 1 -- Solutions_
+_<https://class.coursera.org/proglang-003/forum/thread?thread_id=200>_
 
 ``` sml
 (* Positive Numbers *)

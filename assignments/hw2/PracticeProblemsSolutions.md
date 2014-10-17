@@ -1,5 +1,5 @@
 ## Practice Problems for Section 2 -- Solutions
-<https://class.coursera.org/proglang-003/forum/thread?thread_id=490>
+_<https://class.coursera.org/proglang-003/forum/thread?thread_id=490>_
 
 ``` sml
 (* 38 Cons Cells *)

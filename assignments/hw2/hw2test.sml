@@ -5,6 +5,10 @@
 
 use "hw2provided.sml";
 
+(*------------------*)
+(* QUESTION 1 TESTS *)
+(*------------------*)
+
 val str_list1 = ["strings", "are", "fun"]
 val str_list2 = ["fun", "are", "strings"]
 val str_list3 = ["fun", "are"]
@@ -48,6 +52,7 @@ val test3_2 = get_substitutions2(names2, "Jeff") = ["Geoff", "Jeffrey", "Jeffrey
 val test3_3 = get_substitutions2(names2, "Maris") = []
 
 
+(* similar_names *)
 (* 
  * This reports false but it does acually meet the requirements. That is,
  * "The answer should begin with the original name (then have 0 or more other names)"
@@ -60,9 +65,18 @@ val test4 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie",
 val test4_1 = similar_names(names2, {first = "Jeff", middle = "W", last = "Smith"}) = sub2_result2
 val test4_2 = similar_names(names1, {first = "Jeff", middle = "W", last = "Smith"}) = sub2_result3
 
-(*
+(*------------------*)
+(* QUESTION 2 TESTS *)
+(*------------------*)
 
+(* card_color *)
 val test5 = card_color((Clubs, Num 2)) = Black
+
+val test5_1 = card_color((Spades,   Num 2)) = Black
+val test5_2 = card_color((Diamonds, Num 2)) = Red
+val test5_3 = card_color((Hearts,   Num 2)) = Red
+
+(*
 
 val test6 = card_value((Clubs, Num 2)) = 2
 

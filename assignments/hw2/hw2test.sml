@@ -69,6 +69,10 @@ val test4_2 = similar_names(names1, {first = "Jeff", middle = "W", last = "Smith
 (* QUESTION 2 TESTS *)
 (*------------------*)
 
+val cards1 = [(Clubs, Jack), (Spades, Num 8)]
+val cards2 = [(Clubs, Ace), (Spades, Ace), (Clubs, Ace), (Spades, Ace)]
+val cards3 = [(Clubs, Ace), (Diamonds, King)]
+
 (* card_color *)
 val test5 = card_color((Clubs, Num 2)) = Black
 
@@ -84,9 +88,17 @@ val test6_2 = card_value((Clubs, King))  = 10
 val test6_3 = card_value((Clubs, Queen)) = 10
 val test6_4 = card_value((Clubs, Jack))  = 10
 
-(*
-
+(* remove_card *)
 val test7 = remove_card([(Hearts, Ace)], (Hearts, Ace), IllegalMove) = []
+
+val test7_1 = remove_card(cards1, (Clubs, Jack),   IllegalMove) = [(Spades, Num 8)]
+val test7_2 = remove_card(cards2, (Spades, Ace),   IllegalMove) = [(Clubs, Ace), (Clubs, Ace), (Spades, Ace)]
+val test7_3 = remove_card(cards2, (Clubs, Ace),    IllegalMove) = [(Spades, Ace), (Clubs, Ace), (Spades, Ace)]
+val test7_4 = remove_card(cards1, (Spades, Num 8), IllegalMove) = [(Clubs, Jack)]
+val test7_5 = (remove_card(cards2, (Spades, Num 8), IllegalMove) handle IllegalMove => [ ]) = [ ]
+
+
+(*
 
 val test8 = all_same_color([(Hearts, Ace), (Hearts, Ace)]) = true
 

@@ -181,9 +181,14 @@ fun card_color(a_card) =
 
 (*
  * (b) Write a function card_value, which takes a card and returns its value
- * (numbered cards have theirnumber as the value, aces are 11, everything else
+ * (numbered cards have their number as the value, aces are 11, everything else
  * is 10). Note: One case-expression is enough.
  *)
+fun card_value(a_card) =
+   case a_card of
+      (_, Num num) => num
+   | (_, Ace) => 11
+   | (_, _) => 10
 
 (*
  * (c) Write a function remove_card, which takes a list of cards cs, a card c,

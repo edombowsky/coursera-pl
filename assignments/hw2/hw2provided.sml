@@ -47,8 +47,8 @@ fun all_except_option(str: string, string_list: string list) =
       fun remove_from_list (str_to_remove, remaining_list) =
          case remaining_list of
             [] => []
-            | x :: xs => if same_string(x, str_to_remove) then xs
-                         else x :: remove_from_list(str_to_remove, xs)
+         | x :: xs => if same_string(x, str_to_remove) then xs
+                      else x :: remove_from_list(str_to_remove, xs)
 
          val filtered_list = remove_from_list(str, string_list)
       in
@@ -67,7 +67,7 @@ fun all_except_option(str: string, string_list: string list) =
  *
  * Assume each list in substitutions has no repeats. The result will have
  * repeats if s and another string are both in more than one list in
- *  substitutions. Example:
+ * substitutions. Example:
  *
  *   get_substitutions1([["Fred","Fredrick"],["Jeff","Jeffrey"],["Geoff","Jeff","Jeffrey"]],"Jeff")
  *   (* answer: ["Jeffrey","Geoff","Jeffrey"] *)
@@ -75,7 +75,56 @@ fun all_except_option(str: string, string_list: string list) =
  * Use part (a) and ML's list-append (@) but no other helper functions. Sample
  * solution is around 6 lines.
  *)
+fun get_substitutions1 ([ ], _) = [ ]
+   | get_substitutions1 (x :: xs, str) = case all_except_option (str, x) of
+                                             NONE => get_substitutions1 (xs, str)
+                                         | SOME y => y @ get_substitutions1 (xs, str)
 
+(*
+ * Write a function get_substitutions2, which is like get_substitutions1
+ * except it uses a tail-recursive local helper function.         
+ *)
+fun get_substitutions2 (lst, str) =
+   let
+      fun iter ([ ], acc) = acc
+         | iter (x :: xs, acc) = case all_except_option (str, x) of
+                                    NONE => iter (xs, acc)
+                                 | SOME y => iter (xs, y @ acc)
+   in
+      iter(lst, [ ])
+   end
+
+(*
+ * Write a function similar_names, which takes a string list list of 
+ * substitutions (as in parts (b) and (c)) and a full name of 
+ * type{first:string,middle:string,last:string} and returns a list of full
+ * names (type{first:string,middle:string,last:string} list). The result is
+ * all the full names you can produce by substituting for the first name (and
+ * only the first name) using substitutions and parts (b) or (c). The answer
+ * should begin with the original name (then have 0 or more other names). 
+ * 
+ * Example:
+ *
+ * similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]],
+ *                {first="Fred", middle="W", last="Smith"})
+ * (* answer: [{first="Fred", last="Smith", middle="W"},
+ *             {first="Fredrick", last="Smith", middle="W"},
+ *             {first="Freddie", last="Smith", middle="W"},
+ *             {first="F", last="Smith", middle="W"}] *)
+ *
+ * Do not eliminate duplicates from the answer. Hint: Use a local helper
+ * function. Sample solution is around 10 lines.
+ *)
+fun similar_names(substitutions: string list list, {first=first, middle=middle, last=last}) =
+   let 
+      val first_names = first :: get_substitutions2(substitutions, first);
+      fun helper (first_name_list : string list) =
+         case first_name_list of
+            [] => []
+         | x::x' => {first=x, middle=middle, last=last} :: helper(x')
+   in
+      helper(first_names)
+   end
 
 
 (* you may assume that Num is always used with values 2, 3, ..., 10

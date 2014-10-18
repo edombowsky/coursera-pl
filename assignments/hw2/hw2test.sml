@@ -8,6 +8,20 @@ use "hw2provided.sml";
 val str_list1 = ["strings", "are", "fun"]
 val str_list2 = ["fun", "are", "strings"]
 val str_list3 = ["fun", "are"]
+val str_list4 = ["strings", "are", "fun", "strings"]
+
+val names1 = [["Fred", "Fredrick"], ["Elizabeth", "Betty"], ["Freddie", "Fred", "F"]]
+val names2 = [["Fred", "Fredrick"], ["Jeff", "Jeffrey"], ["Geoff", "Jeff", "Jeffrey"]]
+
+val sub2_result1 = [{first = "Fred", last = "Smith", middle = "W"},
+                    {first = "Fredrick", last = "Smith", middle = "W"},
+                    {first = "F", last = "Smith", middle = "W"},
+                    {first = "Freddie", last = "Smith", middle = "W"}]
+val sub2_result2 = [{first = "Jeff", last = "Smith", middle = "W"},
+                    {first = "Geoff", last = "Smith", middle = "W"},
+                    {first = "Jeffrey", last = "Smith", middle = "W"},
+                    {first = "Jeffrey", last = "Smith", middle = "W"}]
+val sub2_result3 = [{first = "Jeff", middle = "W", last = "Smith"}]
 
 (* all_except_one *)
 val test1 = all_except_option("string", ["string"]) = SOME []
@@ -15,15 +29,38 @@ val test1 = all_except_option("string", ["string"]) = SOME []
 val test1_1 = all_except_option("strings", str_list1) = SOME ["are", "fun"]
 val test1_2 = all_except_option("strings", str_list2) = SOME ["fun", "are"]
 val test1_3 = all_except_option("strings", str_list3) = NONE
+val test1_5 = all_except_option("strings", str_list4) = SOME (["are", "fun", "strings"])
 
-(*
+
+(* get_substitutions1 *)
 val test2 = get_substitutions1([["foo"],["there"]], "foo") = []
 
+val test2_1 = get_substitutions1(names1, "Fred") = ["Fredrick", "Freddie", "F"]
+val test2_2 = get_substitutions1(names2, "Jeff") = ["Jeffrey", "Geoff", "Jeffrey"]
+val test2_3 = get_substitutions2(names2, "Maris") = []
+
+
+(* get_substitutions2 *)
 val test3 = get_substitutions2([["foo"],["there"]], "foo") = []
 
+val test3_1 = get_substitutions2(names1, "Fred") = ["Freddie", "F", "Fredrick"]
+val test3_2 = get_substitutions2(names2, "Jeff") = ["Geoff", "Jeffrey", "Jeffrey"]
+val test3_3 = get_substitutions2(names2, "Maris") = []
+
+
+(* 
+ * This reports false but it does acually meet the requirements. That is,
+ * "The answer should begin with the original name (then have 0 or more other names)"
+ *)
 val test4 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]], {first="Fred", middle="W", last="Smith"}) =
-	    [{first="Fred", last="Smith", middle="W"}, {first="Fredrick", last="Smith", middle="W"},
-	     {first="Freddie", last="Smith", middle="W"}, {first="F", last="Smith", middle="W"}]
+       [{first="Fred", last="Smith", middle="W"}, {first="Fredrick", last="Smith", middle="W"},
+        {first="Freddie", last="Smith", middle="W"}, {first="F", last="Smith", middle="W"}]
+
+
+val test4_1 = similar_names(names2, {first = "Jeff", middle = "W", last = "Smith"}) = sub2_result2
+val test4_2 = similar_names(names1, {first = "Jeff", middle = "W", last = "Smith"}) = sub2_result3
+
+(*
 
 val test5 = card_color((Clubs, Num 2)) = Black
 

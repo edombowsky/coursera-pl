@@ -57,6 +57,7 @@ fun all_except_option(str: string, string_list: string list) =
          if filtered_list = string_list then NONE else SOME filtered_list
       end
 
+
 (*
  * (b) Write a function get_substitutions1, which takes a string list list (a
  * list of list of strings, the substitutions) and a string s and returns a
@@ -82,6 +83,7 @@ fun get_substitutions1 ([ ], _) = [ ]
                                              NONE => get_substitutions1 (xs, str)
                                          | SOME y => y @ get_substitutions1 (xs, str)
 
+
 (*
  * Write a function get_substitutions2, which is like get_substitutions1
  * except it uses a tail-recursive local helper function.         
@@ -95,6 +97,7 @@ fun get_substitutions2 (lst, str) =
    in
       iter(lst, [ ])
    end
+
 
 (*
  * Write a function similar_names, which takes a string list list of 
@@ -179,6 +182,7 @@ fun card_color(a_card) =
    | (Hearts, _)   => Red
    | (Diamonds, _) => Red
 
+
 (*
  * (b) Write a function card_value, which takes a card and returns its value
  * (numbered cards have their number as the value, aces are 11, everything else
@@ -189,6 +193,7 @@ fun card_value(a_card) =
       (_, Num num) => num
    | (_, Ace) => 11
    | (_, _) => 10
+
 
 (*
  * (c) Write a function remove_card, which takes a list of cards cs, a card c,
@@ -202,6 +207,7 @@ fun remove_card(cards: card list, a_card: card, exp: exn) =
    | x :: xs => if a_card = x then xs
                 else x :: remove_card(xs, a_card, exp)
 
+
 (*
  * (d) Write a function all_same_color, which takes a list of cards and returns
  * true if all the cards in the list are the same color. Hint: An elegant
@@ -214,6 +220,7 @@ fun all_same_color(cards) =
    | first :: [] => true
    | first :: second :: rest => if card_color(first) = card_color(second) then all_same_color(second :: rest)
                                 else false
+
 
 (*
  * (e) Write a function sum_cards, which takes a list of cards and returns the
@@ -236,6 +243,14 @@ fun sum_cards(cards) =
  * (f) Write a function score, which takes a card list (the held-cards) and an
  * int (the goal) and computes the score as described above.
  *)
+fun score (held_cards : card list, goal : int ) =
+   let 
+      val sum = sum_cards(held_cards)
+      val prelim_score = if sum > goal then 3 * (sum - goal) else (goal - sum)
+      val same_color = all_same_color(held_cards)
+   in
+      if same_color then prelim_score div 2 else prelim_score
+   end
 
 (*
  * (g) Write a function officiate, which “runs a game.” It takes a card list

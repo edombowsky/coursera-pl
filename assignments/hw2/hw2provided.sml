@@ -273,3 +273,22 @@ fun score (held_cards : card list, goal : int ) =
  *
  * Sample solution for (g) is under 20 lines.
  *)
+fun officiate(cards: card list, moves: move list, goal) =
+   let 
+      val ex = IllegalMove
+      
+      fun officiate_aux(cards: card list, moves: move list, held: card list) =
+         case (cards, moves, held) of
+            (_, [], _) => score(held, goal)
+         | ([], _, _) => score(held, goal)
+         | (cs, Discard(c)::mvs, h) => officiate_aux(cs, mvs, remove_card(h, c, ex))
+         | (c:: cs, Draw::mvs, h) => let 
+                                       val h2 = c::h
+                                       val sum = sum_cards(h2)
+                                    in
+                                       if sum > goal then score(h2, goal) 
+                                       else officiate_aux(cs, mvs, h2)
+                                    end
+   in
+      officiate_aux(cards, moves, [])
+   end

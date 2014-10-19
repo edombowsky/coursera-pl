@@ -117,18 +117,14 @@ val test10_1 = score(cards2, 44) = 0
 val test10_2 = score(cards2, 48) = 2
 val test10_3 = score(cards2, 40) = 6
 
-
-(*
+(* officiate *)
 val test11 = officiate([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) = 6
-
 val test12 = officiate([(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades,Ace)],
                        [Draw,Draw,Draw,Draw,Draw],
                        42)
              = 3
-
 val test13 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
                          [Draw,Discard(Hearts,Jack)],
                          42);
                false) 
               handle IllegalMove => true)
-*)

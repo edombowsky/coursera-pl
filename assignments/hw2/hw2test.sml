@@ -128,3 +128,62 @@ val test13 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
                          42);
                false) 
               handle IllegalMove => true)
+
+
+(*-----------------------------*)
+(* CHALLENGE QUESTIONS TESTING *)
+(*-----------------------------*)
+val test3a_1 =
+   let
+      val c1 = (Hearts,Ace)
+      val c2 = (Spades,Ace)
+   in [
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 99) = 0,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 89) = 0,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 53) = 4,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 52) = 3,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 51) = 2,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 50) = 1,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 49) = 0,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 48) = 3,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 47) = 6,
+        score_challenge([c1, c2, c2, c2, c2, c2, c2, c2, c2], 46) = 7
+      ]
+   end
+
+val test3a_2 = 
+   let
+      val cards = [(Clubs, Ace), (Spades, Ace), (Clubs, Ace), (Hearts, Ace)]
+      val moves1 = [Draw, Draw, Draw, Draw, Draw]
+   in [
+        officiate_challenge(cards, moves1, 44) = 0,
+        officiate_challenge(cards, moves1, 43) = 3,
+        officiate_challenge(cards, moves1, 42) = 6,
+        officiate_challenge(cards, moves1, 41) = 7,
+        officiate_challenge(cards, moves1, 40) = 6
+      ]
+   end
+
+val test3b = 
+   let
+      val cards1 = [(Spades, Num 7), (Hearts, King), (Clubs, Ace), (Diamonds, Num 2)]
+      val cards2 = [(Spades, Num 8), (Hearts, King), (Clubs, Ace), (Diamonds, Num 2)]
+      val cards3 = [(Spades, Ace), (Hearts, Queen), (Spades, Num 7)]
+      val cards4 = [(Spades, Num 7), (Hearts, King), (Clubs, Ace), (Diamonds, Num 2)]
+      val cards5 = [(Clubs, Ace), (Spades, Ace), (Diamonds, Ace), (Hearts, Ace), (Clubs, Num 10), (Spades, Num 10)]
+      val cards6 = [(Spades, Num 7)]
+   in
+      [
+       careful_player(cards1, 18),
+       careful_player(cards1, 8),
+       careful_player(cards2, 8),
+       careful_player(cards2, 18),
+       careful_player(cards2, 20),
+       careful_player(cards2, 21),
+       careful_player(cards3, 21),
+       careful_player(cards4, 18),
+       careful_player(cards4, 17),
+       careful_player(cards5, 42),
+       careful_player(cards6, 8)
+      ]
+   end

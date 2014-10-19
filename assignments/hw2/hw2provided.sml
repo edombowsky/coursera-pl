@@ -53,9 +53,9 @@ fun all_except_option(str: string, string_list: string list) =
                       else x :: remove_from_list(str_to_remove, xs)
 
          val filtered_list = remove_from_list(str, string_list)
-      in
-         if filtered_list = string_list then NONE else SOME filtered_list
-      end
+   in
+      if filtered_list = string_list then NONE else SOME filtered_list
+   end
 
 
 (*
@@ -78,7 +78,7 @@ fun all_except_option(str: string, string_list: string list) =
  * Use part (a) and ML's list-append (@) but no other helper functions. Sample
  * solution is around 6 lines.
  *)
-fun get_substitutions1 ([ ], _) = [ ]
+fun get_substitutions1 ([], _) = []
    | get_substitutions1 (x :: xs, str) = case all_except_option (str, x) of
                                              NONE => get_substitutions1 (xs, str)
                                          | SOME y => y @ get_substitutions1 (xs, str)
@@ -90,12 +90,12 @@ fun get_substitutions1 ([ ], _) = [ ]
  *)
 fun get_substitutions2 (lst, str) =
    let
-      fun iter ([ ], acc) = acc
+      fun iter ([], acc) = acc
          | iter (x :: xs, acc) = case all_except_option (str, x) of
                                     NONE => iter (xs, acc)
                                  | SOME y => iter (xs, y @ acc)
    in
-      iter(lst, [ ])
+      iter(lst, [])
    end
 
 
@@ -122,7 +122,8 @@ fun get_substitutions2 (lst, str) =
  *)
 fun similar_names(substitutions: string list list, {first=first, middle=middle, last=last}) =
    let 
-      val first_names = first :: get_substitutions2(substitutions, first);
+      val first_names = first :: get_substitutions2(substitutions, first)
+      
       fun helper (first_name_list : string list) =
          case first_name_list of
             [] => []
@@ -218,7 +219,8 @@ fun all_same_color(cards) =
    case cards of
       [] => true
    | first :: [] => true
-   | first :: second :: rest => if card_color(first) = card_color(second) then all_same_color(second :: rest)
+   | first :: second :: rest => if card_color(first) = card_color(second) 
+                                then all_same_color(second :: rest)
                                 else false
 
 
@@ -276,19 +278,115 @@ fun score (held_cards : card list, goal : int ) =
 fun officiate(cards: card list, moves: move list, goal) =
    let 
       val ex = IllegalMove
-      
+
       fun officiate_aux(cards: card list, moves: move list, held: card list) =
          case (cards, moves, held) of
             (_, [], _) => score(held, goal)
          | ([], _, _) => score(held, goal)
          | (cs, Discard(c)::mvs, h) => officiate_aux(cs, mvs, remove_card(h, c, ex))
          | (c:: cs, Draw::mvs, h) => let 
-                                       val h2 = c::h
-                                       val sum = sum_cards(h2)
-                                    in
-                                       if sum > goal then score(h2, goal) 
-                                       else officiate_aux(cs, mvs, h2)
-                                    end
+                                        val h2 = c::h
+                                        val sum = sum_cards(h2)
+                                     in
+                                        if sum > goal then score(h2, goal) 
+                                        else officiate_aux(cs, mvs, h2)
+                                     end
    in
       officiate_aux(cards, moves, [])
+   end
+
+(*--------------------*)
+(* CHALLENGE PROBLEMS *)
+(*--------------------*)
+
+(*
+ * (a) Write score_challenge and officiate_challenge to be like their
+ * non-challenge counterparts except each ace can have a value of 1 or 11 and
+ * score_challenge should always return the least (i.e., best) possible score.
+ * (Note the game-ends-if-sum-exceeds-goal rule should apply only if there is
+ * no sum less than or equal to the goal.) Hint: This is easier than you might
+ * think.
+ *)
+fun score_challenge(cs: card list, goal: int) =
+   let
+      exception CardNotFound
+  
+      fun lowest_score(cs: card list, prev_list: card list, lowest: int) =
+         case cs of
+            [] => lowest
+         | (s,Ace)::rest => let
+                               val cs_try = prev_list @ [(s, Num 1)] @ rest
+                               val current_score = score(cs_try, goal)
+                            in
+                               if current_score < lowest 
+                               then lowest_score(rest, prev_list @ [(s, Num 1)], current_score)
+                               else lowest_score(rest, prev_list @ [(s, Ace)], lowest)
+                            end
+         | c::rest => lowest_score(rest, prev_list @ [c], lowest)
+
+      val base_score = score(cs, goal)
+   in
+      lowest_score(cs, [], base_score)
+   end
+
+
+fun officiate_challenge(cs: card list, moves: move list, goal: int) =
+   let
+      fun play_moves(cs: card list, held_cards: card list, moves: move list) =
+         case moves of
+            [] => held_cards
+         | Discard c::ms => play_moves(cs, remove_card(held_cards, c, IllegalMove), ms)
+         | Draw::ms => case cs of
+                          [] => held_cards
+                       | c::rest_of_cards => if (card_value(c) + sum_cards(held_cards)) > goal
+                                             then c::held_cards 
+                                             else play_moves(rest_of_cards, c::held_cards, ms)
+   in
+      score_challenge(play_moves(cs, [], moves), goal)
+   end
+
+
+
+(* 
+ * (b) Write careful_player, which takes a card-list and a goal and returns a
+ * move-list such that calling officiate with the card-list, the goal, and the
+ * move-list has this behavior:
+ *
+ *    - The value of the held cards never exceeds the goal.
+ *    - A card is drawn whenever the goal is more than 10 greater than the
+ *      value of the held cards. As a detail, you should (attempt to) draw,
+ *      even if no cards remain in the card-list.
+ *    - If a score of 0 is reached, there must be no more moves.
+ *    - If it is possible to discard one card, then draw one card to produce
+ *      a score of 0, then this must be done. Note careful_player will have
+ *      to look ahead to the next card, which in many card games is considered
+ *      "cheating." Also note that the previous requirement takes precedence: 
+ *      There must be no more moves after a score of 0 is reached even if
+ *      there is another way to get back to 0.
+ * 
+ * Notes:
+ *
+ *   - There may be more than one result that meets the requirements above.
+ *     The autograder should work for any correct strategy | it checks that
+ *     the result meets the requirements.
+ *   - This problem is not a continuation of problem 3(a). In this problem,
+ *     all aces have a value of 1
+ *)
+fun careful_player(cards, goal) =
+   let
+      fun cheat(ts, h::hs', c::cs') = 
+         if score(c::ts@hs', goal)=0 then SOME h
+         else cheat(h::ts, hs', c::cs')
+         | cheat(_) = NONE
+
+      fun choose_move(_, []) = 
+         []
+         | choose_move(hs, c::cs') = if score(hs, goal)=0 then []
+                                     else case cheat([], hs, c::cs') of
+                                             SOME x => [Discard(x), Draw]
+                                          | NONE => if sum_cards(hs)+10<goal 
+                                                    then (Draw)::choose_move(c::hs, cs')
+                                                    else []
+   in
+      choose_move([], cards)
    end

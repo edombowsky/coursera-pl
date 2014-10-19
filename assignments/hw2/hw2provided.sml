@@ -208,6 +208,13 @@ fun remove_card(cards: card list, a_card: card, exp: exn) =
  * solution is very similar to one of the functions using nested pattern-matching
  * in the lectures.
  *)
+fun all_same_color(cards) =
+   case cards of
+      [] => true
+   | first :: [] => true
+   | first :: second :: rest => if card_color(first) = card_color(second) then all_same_color(second :: rest)
+                                else false
+
 
 (*
  * (e) Write a function sum_cards, which takes a list of cards and returns the

@@ -215,13 +215,22 @@ fun all_same_color(cards) =
    | first :: second :: rest => if card_color(first) = card_color(second) then all_same_color(second :: rest)
                                 else false
 
-
 (*
  * (e) Write a function sum_cards, which takes a list of cards and returns the
  * sum of their values. Use a locally defined helper function that is tail
  * recursive. (Take “calls use a constant amount of stack space” as a
  * requirement for this problem.)
 *)
+fun sum_cards(cards) =
+   let
+      fun accumulate(reamaining, sum) =
+         case reamaining of
+            [] => sum
+         | x :: xs => accumulate(xs, sum + card_value(x))
+   in
+      accumulate(cards, 0)
+   end
+
 
 (*
  * (f) Write a function score, which takes a card list (the held-cards) and an

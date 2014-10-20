@@ -3,8 +3,12 @@
 (* To run the test, add a new line to the top of this file: use "homeworkname.sml"; *)
 (* All the tests should evaluate to true. For example, the REPL should say: val test1 = true : bool *)
 
+use "hw3provided.sml";
+
+
 val test1 = only_capitals ["A","B","C"] = ["A","B","C"]
 
+(*
 val test2 = longest_string1 ["A","bc","C"] = "bc"
 
 val test3 = longest_string2 ["A","bc","C"] = "bc"
@@ -32,4 +36,5 @@ val test10 = check_pat (Variable("x")) = true
 val test11 = match (Const(1), UnitP) = NONE
 
 val test12 = first_match Unit [UnitP] = SOME []
+*)
 

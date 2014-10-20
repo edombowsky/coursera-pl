@@ -37,11 +37,17 @@ datatype typ = Anything
 (**** you can put all your code here ****)
 
 (*
- * 1. Write a function only_capitals that takes a string list and returns a
- * string list that has only the strings in the argument that start with an
- * uppercase letter. Assume all strings have at least 1 character. Use
- * List.filter, Char.isUpper, and String.sub to make a 1-2 line solution.
+ * 1. Write a function only_capitals that
+ *
+ *    - takes a string list and
+ *    - returns a string list that has only the strings in the argument that
+ *      start with an uppercase letter.
+ *
+ * Assume all strings have at least 1 character. Use List.filter, Char.isUpper,
+ * and String.sub to make a 1-2 line solution.
  *)
+val only_capitals =
+	List.filter(fn s => Char.isUpper(String.sub(s, 0)))
 
 
 (*
@@ -86,6 +92,7 @@ datatype typ = Anything
 * if there are no such strings. Assume all strings have at least 1 character.
 * Use a val-binding and the ML library's o operator for composing functions.
 * Resolve ties like in problem 2.
+*)
 
 
 (*
@@ -202,9 +209,9 @@ datatype typ = Anything
  *)
 
 
-(*-----------------*)
-(* Challenge Problem)
-(*-----------------*)
+(*--------------------*)
+(* Challenge Problems *)
+(*--------------------*)
 
 
 (*

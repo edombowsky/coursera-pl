@@ -73,7 +73,7 @@ val longest_string1 =
      foldl and String.size.
  *)
 val longest_string2 =
-	List.foldr(fn (x, max) => if String.size(x) > String.size(max) then x else max) ""
+	List.foldl(fn (x, max) => if String.size(x) >= String.size(max) then x else max) ""
 
 
 (*

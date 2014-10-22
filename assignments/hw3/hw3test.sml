@@ -16,16 +16,18 @@ val test1_2 = only_capitals ["a", "b", "c"] = []
 val test2 = longest_string1 ["A","bc","C"] = "bc"
 
 val test2_1 = longest_string1 [] = ""
-val test2_2 = longest_string1 ["A", "bc", "C", "de"] = "bc"
-val test2_3 = longest_string1 ["A", "B", "C", "D"] = "A"
+val test2_2 = longest_string1 [""] = ""
+val test2_3 = longest_string1 ["A", "bc", "C", "de"] = "bc"
+val test2_4 = longest_string1 ["A", "B", "C", "D"] = "A"
 
 
 (* longest_string2 *)
 val test3 = longest_string2 ["A","bc","C"] = "bc"
 
 val test3_1 = longest_string2 [] = ""
-val test3_2 = longest_string2 ["A", "bc", "C", "de"] = "de"
-val test3_3 = longest_string2 ["A", "B", "C", "D"] = "D"
+val test3_2 = longest_string2 [""] = ""
+val test3_3 = longest_string2 ["A", "bc", "C", "de"] = "de"
+val test3_4 = longest_string2 ["A", "B", "C", "D"] = "D"
 
 (*
 

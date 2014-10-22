@@ -5,11 +5,21 @@
 
 use "hw3provided.sml";
 
-
+(* only_capitals *)
 val test1 = only_capitals ["A","B","C"] = ["A","B","C"]
 
-(*
+val test1_1 = only_capitals [] = []
+val test1_2 = only_capitals ["a", "b", "c"] = []
+
+
+(* longest_string1 *)
 val test2 = longest_string1 ["A","bc","C"] = "bc"
+
+val test2_1 = longest_string1 [] = ""
+val test2_2 = longest_string1 ["A","bc","C", "de"] = "bc"
+val test2_3 = longest_string1 ["A","B","C", "D"] = "A"
+
+(*
 
 val test3 = longest_string2 ["A","bc","C"] = "bc"
 

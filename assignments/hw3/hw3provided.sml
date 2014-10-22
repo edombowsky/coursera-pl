@@ -60,7 +60,8 @@ val only_capitals =
      closest to the beginning of the list. Use foldl, String.size, and no
      recursion (other than the implementation of foldl is recursive).
 *)
-
+val longest_string1 =
+	List.foldl(fn (x, max) => if String.size(x) > String.size(max) then x else max) ""
 
 (*
   3. Write a function longest_string2 that is

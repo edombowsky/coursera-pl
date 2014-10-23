@@ -8,26 +8,36 @@ use "hw3provided.sml";
 (* only_capitals *)
 val test1 = only_capitals ["A","B","C"] = ["A","B","C"]
 
-val test1_1 = only_capitals [] = []
+val test1_1 = only_capitals []              = []
 val test1_2 = only_capitals ["a", "b", "c"] = []
 
 
 (* longest_string1 *)
 val test2 = longest_string1 ["A","bc","C"] = "bc"
 
-val test2_1 = longest_string1 [] = ""
-val test2_2 = longest_string1 [""] = ""
+val test2_1 = longest_string1 []                     = ""
+val test2_2 = longest_string1 [""]                   = ""
 val test2_3 = longest_string1 ["A", "bc", "C", "de"] = "bc"
-val test2_4 = longest_string1 ["A", "B", "C", "D"] = "A"
+val test2_4 = longest_string1 ["A", "B", "C", "D"]   = "A"
 
 
 (* longest_string2 *)
 val test3 = longest_string2 ["A","bc","C"] = "bc"
 
-val test3_1 = longest_string2 [] = ""
-val test3_2 = longest_string2 [""] = ""
+val test3_1 = longest_string2 []                     = ""
+val test3_2 = longest_string2 [""]                   = ""
 val test3_3 = longest_string2 ["A", "bc", "C", "de"] = "de"
-val test3_4 = longest_string2 ["A", "B", "C", "D"] = "D"
+val test3_4 = longest_string2 ["A", "B", "C", "D"]   = "D"
+
+(* longest_capitalized *)
+val test5 = longest_capitalized ["A","bc","C"] = "A";
+
+val test5_1 = longest_capitalized []                = "";
+val test5_2 = longest_capitalized ["a","bc","c"]    = "";
+val test5_3 = longest_capitalized ["A","bc","C"]    = "A";
+val test5_4 = longest_capitalized ["AB","bc","Ab"]  = "AB"
+val test5_5 = longest_capitalized ["ab","BB","Abc"] = "Abc"
+
 
 (*
 

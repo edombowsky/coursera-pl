@@ -105,6 +105,7 @@ val longest_string2 =
     Assume all strings have at least 1 character. Use a val-binding and the
     ML library's o operator for composing functions. Resolve ties like in problem 2.
 *)
+val longest_capitalized = longest_string1 o only_capitals
 
 
 (*

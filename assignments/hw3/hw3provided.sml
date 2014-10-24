@@ -46,8 +46,7 @@ datatype typ = Anything
      Assume all strings have at least 1 character. Use List.filter, Char.isUpper,
      and String.sub to make a 1-2 line solution.
 *)
-val only_capitals =
-   List.filter(fn s => Char.isUpper(String.sub(s, 0)))
+val only_capitals = List.filter(fn s => Char.isUpper(String.sub(s, 0)))
 
 
 (*
@@ -93,7 +92,14 @@ val longest_string2 =
        - longest_string3 and longest_string4 are defined with val-bindings and
          partial applications of longest_string_helper.
 *)
+fun longest_string_helper compare strings = 
+  List.foldl(fn (x, y) => 
+    if compare(String.size(x), String.size(y)) then x else y) "" strings
 
+
+(* "op >" and "op >=" could also be used instead of lambda functions *)
+val longest_string3 = longest_string_helper (fn (x, y) => x > y)
+val longest_string4 = longest_string_helper (op >=)
 
 (*
  5. Write a function longest_capitalized that

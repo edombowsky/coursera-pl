@@ -29,6 +29,24 @@ val test3_2 = longest_string2 [""]                   = ""
 val test3_3 = longest_string2 ["A", "bc", "C", "de"] = "de"
 val test3_4 = longest_string2 ["A", "B", "C", "D"]   = "D"
 
+
+(* longest_string3 *)
+val test4a= longest_string3 ["A","bc","C"] = "bc"
+
+val test4a_1 = longest_string1 []                     = ""
+val test4a_2 = longest_string1 [""]                   = ""
+val test4a_3 = longest_string1 ["A", "bc", "C", "de"] = "bc"
+val test4a_4 = longest_string1 ["A", "B", "C", "D"]   = "A"
+
+(* longest_string4 *)
+val test4b= longest_string4 ["A","B","C"] = "C"
+
+val test4b_1 = longest_string2 []                     = ""
+val test4b_2 = longest_string2 [""]                   = ""
+val test4b_3 = longest_string2 ["A", "bc", "C", "de"] = "de"
+val test4b_4 = longest_string2 ["A", "B", "C", "D"]   = "D"
+
+
 (* longest_capitalized *)
 val test5 = longest_capitalized ["A","bc","C"] = "A";
 
@@ -40,12 +58,6 @@ val test5_5 = longest_capitalized ["ab","BB","Abc"] = "Abc"
 
 
 (*
-
-val test4a= longest_string3 ["A","bc","C"] = "bc"
-
-val test4b= longest_string4 ["A","B","C"] = "C"
-
-val test5 = longest_capitalized ["A","bc","C"] = "A";
 
 val test6 = rev_string "abc" = "cba";
 

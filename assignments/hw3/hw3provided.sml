@@ -149,9 +149,9 @@ val rev_string = String.implode o List.rev o String.explode
      Hints: Sample solution is 5 lines and does nothing fancy.
 *)
 fun first_answer _ [] = raise NoAnswer
-	| first_answer f (x::xs) = case f(x) of NONE =>
-      							      first_answer f xs
-    									| SOME v => v
+   | first_answer f (x::xs) = case f(x) of NONE =>
+                                 first_answer f xs
+                               | SOME v => v
 
 
 (*

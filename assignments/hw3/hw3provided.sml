@@ -15,7 +15,7 @@ datatype valu = Const of int
           | Constructor of string * valu
 
 fun g f1 f2 p =
-    let 
+    let
     val r = g f1 f2
     in
     case p of
@@ -98,7 +98,7 @@ fun longest_string_helper compare strings =
 
 
 (*
-   I like the following "op >" and "op >=" instead of (fn (x, y) => x > y) and
+   I like using "op >" and "op >=" instead of (fn (x, y) => x > y) and
    "fn (x, y) => x >= y" lambda functions.
 *)
 val longest_string3 = longest_string_helper (op >)
@@ -127,7 +127,7 @@ val longest_capitalized = longest_string1 o only_capitals
      two library functions in the String module. (Browse the module
      documentation to find the most useful functions.)
 *)
-val rev_string = implode o rev o explode
+val rev_string = String.implode o List.rev o String.explode
 
 
 (*
@@ -149,10 +149,9 @@ val rev_string = implode o rev o explode
      Hints: Sample solution is 5 lines and does nothing fancy.
 *)
 fun first_answer _ [] = raise NoAnswer
-  | first_answer f (x::xs) =
-    case f(x) of NONE =>
-      first_answer f xs
-    | SOME v => v
+	| first_answer f (x::xs) = case f(x) of NONE =>
+      							      first_answer f xs
+    									| SOME v => v
 
 
 (*
@@ -260,6 +259,7 @@ val check_pat =
          | TupleP ps => List.concat (map get_variables ps)
          | ConstructorP(_,p) => get_variables p
          | _ => []
+
       fun has_duplicates [] = false
          | has_duplicates (x::xs) = List.exists (fn y => x = y) xs orelse has_duplicates xs
    in
@@ -317,9 +317,9 @@ fun first_match v ps =
    SOME (first_answer (fn x => match (v, x)) ps) handle NoAnswer => NONE
 
 
-(*--------------------*)
-(* Challenge Problems *)
-(*--------------------*)
+(*-------------------*)
+(* Challenge Problems*)
+(*-------------------*)
 
 (*
   Write a function typecheck_patterns that "type-checks" a pattern list.

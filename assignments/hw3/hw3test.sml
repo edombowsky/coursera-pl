@@ -203,7 +203,7 @@ val challenge_9 = typecheck_patterns([], [TupleP [Wildcard, ConstP 1], TupleP [W
 
 (*no constructor*)
 val challenge_10 = typecheck_patterns([], [ConstructorP("c", Variable "x")])
-= NONE orelse raise TestCaseFailed
+   = NONE orelse raise TestCaseFailed
 
 (*constructor*)
 val challenge_11 = typecheck_patterns([("c", "t", TupleT[IntT, Anything])],

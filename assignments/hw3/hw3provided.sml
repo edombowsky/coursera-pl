@@ -60,7 +60,7 @@ val only_capitals = List.filter(fn s => Char.isUpper(String.sub(s, 0)))
      recursion (other than the implementation of foldl is recursive).
 *)
 val longest_string1 =
-	List.foldl(fn (x, max) => if String.size(x) > String.size(max) then x else max) ""
+   List.foldl(fn (x, max) => if String.size(x) > String.size(max) then x else max) ""
 
 (*
   3. Write a function longest_string2 that is
@@ -72,7 +72,7 @@ val longest_string1 =
      foldl and String.size.
  *)
 val longest_string2 =
-	List.foldl(fn (x, max) => if String.size(x) >= String.size(max) then x else max) ""
+   List.foldl(fn (x, max) => if String.size(x) >= String.size(max) then x else max) ""
 
 
 (*
@@ -172,15 +172,15 @@ fun first_answer _ [] = raise NoAnswer
            SOME [].
 *)
 fun all_answers f xs =
-	let
-		fun iter ([], acc) = SOME acc
-		| iter (x :: xs, acc) =
-			case f x of
-				NONE => NONE
-			| SOME v => iter(xs, v @ acc)
-	in
-		iter(xs, [])
-	end
+   let
+      fun iter ([], acc) = SOME acc
+      | iter (x :: xs, acc) =
+         case f x of
+            NONE => NONE
+         | SOME v => iter(xs, v @ acc)
+   in
+      iter(xs, [])
+   end
 
 (*
   Given valu v and pattern p, either p matches v or not. If it does, the match
@@ -224,15 +224,15 @@ fun all_answers f xs =
 
 (* 9a *)
 val count_wildcards =
-	g (fn () => 1) (fn str => 0)
+   g (fn () => 1) (fn str => 0)
 
 (* 9b *)
 val count_wild_and_variable_lengths =
-	g (fn () => 1) String.size
+   g (fn () => 1) String.size
 
 (* 9c *)
 fun count_some_var (str, pattern) =
-	g (fn () => 0) (fn s => if s = str then 1 else 0) pattern
+   g (fn () => 0) (fn s => if s = str then 1 else 0) pattern
 
 
 (*
@@ -253,18 +253,18 @@ fun count_some_var (str, pattern) =
                but they make it easier.
 *)
 val check_pat =
-	let
-		fun get_variables p =
-			case p of Variable x =>
-				[x]
-			| TupleP ps => List.concat (map get_variables ps)
-			| ConstructorP(_,p) => get_variables p
-			| _ => []
-		fun has_duplicates [] = false
-			| has_duplicates (x::xs) = List.exists (fn y => x = y) xs orelse has_duplicates xs
-	in
-		not o has_duplicates o get_variables
-	end
+   let
+      fun get_variables p =
+         case p of Variable x =>
+            [x]
+         | TupleP ps => List.concat (map get_variables ps)
+         | ConstructorP(_,p) => get_variables p
+         | _ => []
+      fun has_duplicates [] = false
+         | has_duplicates (x::xs) = List.exists (fn y => x = y) xs orelse has_duplicates xs
+   in
+      not o has_duplicates o get_variables
+   end
 
 
 (*
@@ -287,18 +287,18 @@ val check_pat =
              here, but they make it easier.
 *)
 fun match valptrn =
-	case valptrn of (_, Wildcard) =>
-		SOME []
-	| (v, Variable s) => SOME [(s, v)]
-	| (Unit, UnitP) => SOME []
-	| (Const v, ConstP v') => if v = v' then SOME [] else NONE
-	| (Tuple vs, TupleP ps) => if length(vs) = length(ps)
-			 					      then all_answers match (ListPair.zip(vs, ps))
-										else NONE
-	| (Constructor(s2, v), ConstructorP(s1, p)) => if s1 = s2
-																  then match(v, p)
-																  else NONE
-	| _ => NONE
+   case valptrn of (_, Wildcard) =>
+      SOME []
+   | (v, Variable s) => SOME [(s, v)]
+   | (Unit, UnitP) => SOME []
+   | (Const v, ConstP v') => if v = v' then SOME [] else NONE
+   | (Tuple vs, TupleP ps) => if length(vs) = length(ps)
+                              then all_answers match (ListPair.zip(vs, ps))
+                              else NONE
+   | (Constructor(s2, v), ConstructorP(s1, p)) => if s1 = s2
+                                                  then match(v, p)
+                                                  else NONE
+   | _ => NONE
 
 
 (*
@@ -314,7 +314,7 @@ fun match valptrn =
       Hints: Sample solution is 3 lines.
 *)
 fun first_match v ps =
-	SOME (first_answer (fn x => match (v, x)) ps) handle NoAnswer => NONE
+   SOME (first_answer (fn x => match (v, x)) ps) handle NoAnswer => NONE
 
 
 (*--------------------*)
@@ -350,3 +350,49 @@ fun first_match v ps =
   patterns are TupleP[Wildcard,Wildcard] and TupleP[Wildcard,TupleP[Wildcard,Wildcard]],
   you must return TupleT[Anything,TupleT[Anything,Anything]].
 *)
+
+fun pattern_to_type (lst, pat) =
+   case pat of
+      UnitP => UnitT
+   | ConstP _ => IntT
+   | TupleP ps => TupleT (List.map (fn x => pattern_to_type(lst, x)) ps)
+   | ConstructorP(str, p) => let fun cons_match x =
+                                case x of (s, _, pp) =>
+                                   s = str andalso (pattern_to_type(lst, p) = pp
+                                           orelse pattern_to_type(lst, p) = Anything)
+                             in
+                                case List.find cons_match lst of
+                                   SOME (_, a, _) => Datatype a
+                                | NONE => raise NoAnswer
+                             end
+   | _ => Anything
+
+(*
+   Given two typs, find the more strict typ. "lenient" means the strict typ
+   that both typs can have. If no such typ, raise NoAnswer exception.
+ *)
+fun get_lenient (t1, t2) =
+   if t1 = t2 then t1
+   else case (t1, t2) of
+           (_, Anything) => t1
+        | (Anything, _) => t2
+        | (TupleT ps1, TupleT ps2) => if List.length ps1 = List.length ps2
+                                      then TupleT(List.map get_lenient (ListPair.zip(ps1, ps2)))
+                                      else raise NoAnswer
+        | (_, _) => raise NoAnswer
+
+(*
+   Check the typ of patterns. First find all the typs of given patterns,
+   if any of them is NONE return NONE, otherwise get the most lenient typ
+   from all the typs. If no such typ, return NONE.
+*)
+fun typecheck_patterns (lst, ps) =
+   let
+      val typs = List.map (fn x => pattern_to_type(lst, x)) ps
+      handle NoAnswer => []
+   in
+      case typs of
+         [] => NONE
+      | head::tail => SOME (List.foldl get_lenient head tail)
+      handle NoAnswer => NONE
+   end

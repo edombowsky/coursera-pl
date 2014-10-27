@@ -5,6 +5,9 @@
 
 use "hw3provided.sml";
 
+exception TestCaseFailed
+
+
 (* only_capitals *)
 val test1 = only_capitals ["A","B","C"] = ["A","B","C"]
 
@@ -166,3 +169,76 @@ val test12_1 = first_match (Const 1) [ConstP 1] = SOME []
 val test12_2 = first_match (Const 1) [ConstP 2] = NONE
 val test12_3 = first_match (Const 1) [ConstP 2, Variable "foo", ConstP 1] = SOME [("foo", Const 1)]
 
+
+(* Challenge tests *)
+
+(*empty list, NONE or SOME(Anything)? Doesn't matter for autograder*)
+val challenge_1 = typecheck_patterns([], []) = NONE orelse raise TestCaseFailed
+
+(*examples from doc*)
+val challenge_2 = typecheck_patterns([], [TupleP [Variable "x", Variable "y"], TupleP [Wildcard, Wildcard]])
+   = SOME(TupleT [Anything, Anything]) orelse raise TestCaseFailed
+
+val challenge_3 = typecheck_patterns([], [TupleP [Wildcard, TupleP [Wildcard, Wildcard]], TupleP [Wildcard, Wildcard]])
+   = SOME(TupleT [Anything, TupleT [Anything, Anything]]) orelse raise TestCaseFailed
+
+(*int test*)
+val challenge_4 = typecheck_patterns([], [ConstP 5, Wildcard, ConstP 3, Variable "x"])
+   = SOME(IntT) orelse raise TestCaseFailed
+
+(*different types*)
+val challenge_5 = typecheck_patterns([], [ConstP 5, UnitP]) = NONE orelse raise TestCaseFailed
+val challenge_6 = typecheck_patterns([("c", "t", IntT)], [ConstructorP("c", ConstP 5), ConstP 5])
+   = NONE orelse raise TestCaseFailed
+
+(*tuples of different length*)
+val challenge_7 = typecheck_patterns([], [TupleP [Wildcard], TupleP [Wildcard, Wildcard]])
+   = NONE orelse raise TestCaseFailed
+
+(*tuples with different types*)
+val challenge_8 = typecheck_patterns([], [TupleP [ConstP 3], TupleP [UnitP]])
+   = NONE orelse raise TestCaseFailed
+val challenge_9 = typecheck_patterns([], [TupleP [Wildcard, ConstP 1], TupleP [Wildcard, TupleP [Wildcard]]])
+   = NONE orelse raise TestCaseFailed
+
+(*no constructor*)
+val challenge_10 = typecheck_patterns([], [ConstructorP("c", Variable "x")])
+= NONE orelse raise TestCaseFailed
+
+(*constructor*)
+val challenge_11 = typecheck_patterns([("c", "t", TupleT[IntT, Anything])],
+                                      [ConstructorP("c", TupleP [ConstP 4, Variable "x"])])
+   = SOME(Datatype "t") orelse raise TestCaseFailed
+val challenge_12 = typecheck_patterns([("c1", "t1", UnitT), ("c2", "t2", UnitT)],
+                                      [ConstructorP("c1", UnitP), ConstructorP("c2", UnitP)])
+   = NONE orelse raise TestCaseFailed
+val challenge_13 = typecheck_patterns([("c1", "t1", UnitT), ("c2", "t2", UnitT)],
+                                      [ConstructorP("c1", UnitP), ConstructorP("c1", UnitP)])
+   = SOME(Datatype "t1") orelse raise TestCaseFailed
+
+(*wrong type of constructor, or should it work?*)
+val challenge_14 = typecheck_patterns([("c", "t", TupleT[Anything, Anything])],
+                                      [ConstructorP("c", TupleP [ConstP 4, Variable "x"])])
+   = NONE orelse raise TestCaseFailed
+
+(*tuples*)
+val challenge_15 = typecheck_patterns([("c", "t", IntT)],
+                                      [TupleP [Wildcard, TupleP [ConstP 3, Wildcard]],
+                                       TupleP [Wildcard, TupleP [Variable "x", UnitP]],
+                                       TupleP [ConstructorP("c", ConstP 13), Wildcard]])
+   = SOME(TupleT [Datatype "t", TupleT [IntT, UnitT]]) orelse raise TestCaseFailed
+
+(*two constructors for the same type*)
+val challenge_16 = typecheck_patterns([("c1", "t", TupleT[IntT, Datatype "t"]), ("c2", "t", UnitT)],
+                                      [ConstructorP("c1", TupleP [ConstP 5, ConstructorP("c2", UnitP)]), ConstructorP("c2", UnitP)])
+   = SOME(Datatype "t") orelse raise TestCaseFailed
+val challenge_17 = typecheck_patterns([("c", "t", TupleT[IntT, Datatype "t"]), ("c", "t", UnitT)],
+                                      [ConstructorP("c", TupleP [ConstP 5, ConstructorP("c", UnitP)]), ConstructorP("c", UnitP)])
+   = SOME(Datatype "t") orelse raise TestCaseFailed
+val challenge_18 = typecheck_patterns([("c1", "t1", TupleT[IntT, Datatype "t2"]), ("c2", "t2", UnitT)],
+                                      [ConstructorP("c1", TupleP [ConstP 5, ConstructorP("c2", UnitP)]), ConstructorP("c2", UnitP)])
+   = NONE orelse raise TestCaseFailed
+val challenge_19 = typecheck_patterns ([("foo","bar",IntT)], [ConstructorP("foo", Variable "x")])
+   = SOME (Datatype "bar") orelse raise TestCaseFailed
+val challenge_20 = typecheck_patterns ([("foo","bar",Anything)], [ConstructorP("foo", ConstP 3)])
+   = NONE orelse raise TestCaseFailed

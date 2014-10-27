@@ -63,11 +63,19 @@ val test6 = rev_string "abc" = "cba";
 val test6_1 = rev_string "" = "";
 val test6_2 = rev_string "a" = "";
 
+
+(* first_answer *)
+val test7 = first_answer (fn x => if x > 3 then SOME x else NONE) [1,2,3,4,5] = 4
+
+fun f n = if n = 6 then NONE else SOME n
+val test7_1 = first_answer f [1] = 1
+val test7_2 = first_answer f [6, 6, 3, 6] = 3
+val test7_3 = first_answer f [3, 4, 5, 6] = 3
+val test7_4 = (first_answer f []; false) handle NoAnswer => true
+val test7_5 = (first_answer f [6, 6, 6, 6]; false) handle NoAnswer => true
+
+
 (*
-
-
-val test7 = first_answer (fn x => if x > 3 then SOME x else NOmNE) [1,2,3,4,5] = 4
-
 val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7] = NONE
 
 val test9a = count_wildcards Wildcard = 1

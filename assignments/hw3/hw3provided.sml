@@ -136,7 +136,10 @@ val rev_string = implode o rev o explode
 *)
 
 (*
-  7. Write a function first_answer of type ('a -> 'b option) -> 'a list -> 'b
+  7. Write a function first_answer of type 
+
+       ('a -> 'b option) -> 'a list -> 'b
+
      (notice the 2 arguments are curried). The fist argument should be applied
      to elements of the second argument in order until the first time it
      returns SOME v for some v and then v is the result of the call to
@@ -145,6 +148,12 @@ val rev_string = implode o rev o explode
 
      Hints: Sample solution is 5 lines and does nothing fancy.
 *)
+fun first_answer _ [] = raise NoAnswer
+  | first_answer f (x::xs) =
+    case f(x) of NONE =>
+      first_answer f xs
+    | SOME v => v
+
 
 
 (*

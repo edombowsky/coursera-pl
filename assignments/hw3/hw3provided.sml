@@ -261,8 +261,7 @@ val check_pat =
 			| ConstructorP(_,p) => get_variables p
 			| _ => []
 		fun has_duplicates [] = false
-			| has_duplicates (x::xs) =
-				List.exists (fn y => x = y) xs orelse has_duplicates xs
+			| has_duplicates (x::xs) = List.exists (fn y => x = y) xs orelse has_duplicates xs
 	in
 		not o has_duplicates o get_variables
 	end
@@ -287,6 +286,19 @@ val check_pat =
              These are hints: We are not requiring all_answers and ListPair.zip
              here, but they make it easier.
 *)
+fun match valptrn =
+	case valptrn of (_, Wildcard) =>
+		SOME []
+	| (v, Variable s) => SOME [(s, v)]
+	| (Unit, UnitP) => SOME []
+	| (Const v, ConstP v') => if v = v' then SOME [] else NONE
+	| (Tuple vs, TupleP ps) => if length(vs) = length(ps)
+			 					      then all_answers match (ListPair.zip(vs, ps))
+										else NONE
+	| (Constructor(s2, v), ConstructorP(s1, p)) => if s1 = s2
+																  then match(v, p)
+																  else NONE
+	| _ => NONE
 
 
 (*

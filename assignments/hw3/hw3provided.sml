@@ -97,8 +97,11 @@ fun longest_string_helper compare strings =
     if compare(String.size(x), String.size(y)) then x else y) "" strings
 
 
-(* "op >" and "op >=" could also be used instead of lambda functions *)
-val longest_string3 = longest_string_helper (fn (x, y) => x > y)
+(* 
+   I like the following "op >" and "op >=" instead of (fn (x, y) => x > y) and
+   "fn (x, y) => x >= y" lambda functions 
+*)
+val longest_string3 = longest_string_helper (op >)
 val longest_string4 = longest_string_helper (op >=)
 
 (*
@@ -124,6 +127,7 @@ val longest_capitalized = longest_string1 o only_capitals
      two library functions in the String module. (Browse the module
      documentation to find the most useful functions.)
 *)
+val rev_string = implode o rev o explode
 
 
 (*

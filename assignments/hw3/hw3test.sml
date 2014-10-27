@@ -57,11 +57,16 @@ val test5_4 = longest_capitalized ["AB","bc","Ab"]  = "AB"
 val test5_5 = longest_capitalized ["ab","BB","Abc"] = "Abc"
 
 
-(*
-
+(* rev_string *)
 val test6 = rev_string "abc" = "cba";
 
-val test7 = first_answer (fn x => if x > 3 then SOME x else NONE) [1,2,3,4,5] = 4
+val test6_1 = rev_string "" = "";
+val test6_2 = rev_string "a" = "";
+
+(*
+
+
+val test7 = first_answer (fn x => if x > 3 then SOME x else NOmNE) [1,2,3,4,5] = 4
 
 val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7] = NONE
 

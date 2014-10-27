@@ -61,7 +61,7 @@ val test5_5 = longest_capitalized ["ab","BB","Abc"] = "Abc"
 val test6 = rev_string "abc" = "cba";
 
 val test6_1 = rev_string "" = "";
-val test6_2 = rev_string "a" = "";
+val test6_2 = rev_string "a" = "a";
 
 
 (* first_answer *)
@@ -98,9 +98,9 @@ val test9a_5 = count_wildcards UnitP = 0
 val test9b = count_wild_and_variable_lengths (Variable("a")) = 1
 
 val test9b_1 = count_wild_and_variable_lengths Wildcard = 1
-val test9b_2 = count_wild_and_variable_lengths (Variable "foo") = 2
+val test9b_2 = count_wild_and_variable_lengths (Variable "foo") = 3
 val test9b_3 = count_wild_and_variable_lengths UnitP = 0
-val test9b_4 = count_wild_and_variable_lengths (ConstructorP("foo", TupleP[Wildcard, Variable "bar"])) = 3
+val test9b_4 = count_wild_and_variable_lengths (ConstructorP("foo", TupleP[Wildcard, Variable "bar"])) = 4
 val test9b_5 = count_wild_and_variable_lengths (TupleP [Wildcard, Variable "foo"]) = 4;
 
 (* count_some_var *)
@@ -112,8 +112,17 @@ val test9c_3 = count_some_var("hi", UnitP) = 0
 val test9c_4 = count_some_var("hi", TupleP[Wildcard, Variable "hi", Variable "ha"]) = 1
 val test9c_5 = count_some_var("hi", ConstructorP("hi", TupleP[Wildcard, Variable "hi", TupleP[Variable "hi", Variable "ho"]])) = 2
 
-(*
+(* check_pat *)
 val test10 = check_pat (Variable("x")) = true
+
+val test10_1 = check_pat Wildcard = true
+val test10_2 = check_pat (Variable "foo") = true
+val test10_3 = check_pat (TupleP[Wildcard, Variable "foo", ConstructorP("bar", Variable "foobar")]) = true
+val test10_4 = check_pat (TupleP [Variable "x", Variable "y"]) = true;
+val test10_5 = check_pat (TupleP [Variable "x", Variable "x"]) = false;
+
+
+(*
 
 val test11 = match (Const(1), UnitP) = NONE
 

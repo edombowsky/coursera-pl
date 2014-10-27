@@ -252,6 +252,20 @@ fun count_some_var (str, pattern) =
                These are hints: We are not requiring foldl and List.exists here,
                but they make it easier.
 *)
+val check_pat =
+	let
+		fun get_variables p =
+			case p of Variable x =>
+				[x]
+			| TupleP ps => List.concat (map get_variables ps)
+			| ConstructorP(_,p) => get_variables p
+			| _ => []
+		fun has_duplicates [] = false
+			| has_duplicates (x::xs) =
+				List.exists (fn y => x = y) xs orelse has_duplicates xs
+	in
+		not o has_duplicates o get_variables
+	end
 
 
 (*

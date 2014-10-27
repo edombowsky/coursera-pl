@@ -80,16 +80,39 @@ val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7]
 fun f2 n = if n = 6 then NONE else SOME [n]
 val test8_1 = all_answers f2 [] = SOME []
 val test8_2 = all_answers f2 [1] = SOME [1]
-val test8_3 = all_answers f2 [1,2,3] = SOME[3,2,1]
-val test8_4 = all_answers f2 [1,2,6,3] = NONE
+val test8_2a = all_answers f2 [1, 1] = SOME [1, 1]
+val test8_3 = all_answers f2 [1, 2, 3] = SOME[3, 2, 1]
+val test8_4 = all_answers f2 [1, 2, 6, 3] = NONE
 
-(*
+
+(* count_wild_cards *)
 val test9a = count_wildcards Wildcard = 1
 
+val test9a_1 = count_wildcards (Variable "foo") = 0
+val test9a_2 = count_wildcards (TupleP [Variable "foo", Wildcard, Variable "bar", Wildcard]) = 2
+val test9a_3 = count_wildcards (ConstructorP("foo", TupleP[Wildcard, Variable "bar"])) = 1
+val test9a_4 = count_wildcards (ConstP 17) = 0
+val test9a_5 = count_wildcards UnitP = 0
+
+(* count_wild_cards_and_variable_lenghts *)
 val test9b = count_wild_and_variable_lengths (Variable("a")) = 1
 
+val test9b_1 = count_wild_and_variable_lengths Wildcard = 1
+val test9b_2 = count_wild_and_variable_lengths (Variable "foo") = 2
+val test9b_3 = count_wild_and_variable_lengths UnitP = 0
+val test9b_4 = count_wild_and_variable_lengths (ConstructorP("foo", TupleP[Wildcard, Variable "bar"])) = 3
+val test9b_5 = count_wild_and_variable_lengths (TupleP [Wildcard, Variable "foo"]) = 4;
+
+(* count_some_var *)
 val test9c = count_some_var ("x", Variable("x")) = 1;
 
+val test9c_1 = count_some_var("hi", Wildcard) = 0
+val test9c_2 = count_some_var("hi", (Variable "hi")) = 1
+val test9c_3 = count_some_var("hi", UnitP) = 0
+val test9c_4 = count_some_var("hi", TupleP[Wildcard, Variable "hi", Variable "ha"]) = 1
+val test9c_5 = count_some_var("hi", ConstructorP("hi", TupleP[Wildcard, Variable "hi", TupleP[Variable "hi", Variable "ho"]])) = 2
+
+(*
 val test10 = check_pat (Variable("x")) = true
 
 val test11 = match (Const(1), UnitP) = NONE

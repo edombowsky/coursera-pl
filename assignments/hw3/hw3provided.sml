@@ -222,6 +222,18 @@ fun all_answers f xs =
          constructor names are not relevant.
 *)
 
+(* 9a *)
+val count_wildcards =
+	g (fn () => 1) (fn str => 0)
+
+(* 9b *)
+val count_wild_and_variable_lengths =
+	g (fn () => 1) String.size
+
+(* 9c *)
+fun count_some_var (str, pattern) =
+	g (fn () => 0) (fn s => if s = str then 1 else 0) pattern
+
 
 (*
   10. Write a function check_pat that

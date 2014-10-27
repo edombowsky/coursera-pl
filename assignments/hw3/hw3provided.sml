@@ -97,9 +97,9 @@ fun longest_string_helper compare strings =
     if compare(String.size(x), String.size(y)) then x else y) "" strings
 
 
-(* 
+(*
    I like the following "op >" and "op >=" instead of (fn (x, y) => x > y) and
-   "fn (x, y) => x >= y" lambda functions 
+   "fn (x, y) => x >= y" lambda functions.
 *)
 val longest_string3 = longest_string_helper (op >)
 val longest_string4 = longest_string_helper (op >=)
@@ -155,7 +155,6 @@ fun first_answer _ [] = raise NoAnswer
     | SOME v => v
 
 
-
 (*
  8. Write a function all_answers of type
 
@@ -172,7 +171,16 @@ fun first_answer _ [] = raise NoAnswer
            accumulator and uses @. Note all_answers f [] should evaluate to
            SOME [].
 *)
-
+fun all_answers f xs =
+	let
+		fun iter ([], acc) = SOME acc
+		| iter (x :: xs, acc) =
+			case f x of
+				NONE => NONE
+			| SOME v => iter(xs, v @ acc)
+	in
+		iter(xs, [])
+	end
 
 (*
   Given valu v and pattern p, either p matches v or not. If it does, the match

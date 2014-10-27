@@ -67,17 +67,23 @@ val test6_2 = rev_string "a" = "";
 (* first_answer *)
 val test7 = first_answer (fn x => if x > 3 then SOME x else NONE) [1,2,3,4,5] = 4
 
-fun f n = if n = 6 then NONE else SOME n
-val test7_1 = first_answer f [1] = 1
-val test7_2 = first_answer f [6, 6, 3, 6] = 3
-val test7_3 = first_answer f [3, 4, 5, 6] = 3
-val test7_4 = (first_answer f []; false) handle NoAnswer => true
-val test7_5 = (first_answer f [6, 6, 6, 6]; false) handle NoAnswer => true
+fun f1 n = if n = 6 then NONE else SOME n
+val test7_1 = first_answer f1 [1] = 1
+val test7_2 = first_answer f1 [6, 6, 3, 6] = 3
+val test7_3 = first_answer f1 [3, 4, 5, 6] = 3
+val test7_4 = (first_answer f1 []; false) handle NoAnswer => true
+val test7_5 = (first_answer f1 [6, 6, 6, 6]; false) handle NoAnswer => true
 
-
-(*
+(* all_answers *)
 val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7] = NONE
 
+fun f2 n = if n = 6 then NONE else SOME [n]
+val test8_1 = all_answers f2 [] = SOME []
+val test8_2 = all_answers f2 [1] = SOME [1]
+val test8_3 = all_answers f2 [1,2,3] = SOME[3,2,1]
+val test8_4 = all_answers f2 [1,2,6,3] = NONE
+
+(*
 val test9a = count_wildcards Wildcard = 1
 
 val test9b = count_wild_and_variable_lengths (Variable("a")) = 1

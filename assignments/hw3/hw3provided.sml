@@ -313,12 +313,13 @@ fun match valptrn =
 
       Hints: Sample solution is 3 lines.
 *)
+fun first_match v ps =
+	SOME (first_answer (fn x => match (v, x)) ps) handle NoAnswer => NONE
 
 
 (*--------------------*)
 (* Challenge Problems *)
 (*--------------------*)
-
 
 (*
   Write a function typecheck_patterns that "type-checks" a pattern list.

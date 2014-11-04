@@ -333,7 +333,7 @@ Restrictions on the memory come in various ways. First off, a constant `maxLocat
 
 Here is a start on the structure that implements this signature:
 
-`` sml
+``` sml
 structure Memory :> MEMORY = 
 struct
    structure W = MemWord

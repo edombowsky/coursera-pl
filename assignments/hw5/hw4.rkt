@@ -14,5 +14,6 @@
 ;          (sequence 3 8 3)   '(3 6)
 ;          (sequence 3 2 1)   '()
 (define (sequence low high stride)
-  (if (> low high) null
+  (if (> low high) 
+      null
       (cons low (sequence (+ low stride) high stride))))

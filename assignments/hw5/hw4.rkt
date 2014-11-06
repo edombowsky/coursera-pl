@@ -6,6 +6,7 @@
 ;; put your code below
 
 ; problem 1
+;
 ; Write a function sequence that takes 3 arguments low, high, and stride, all assumed to be numbers.
 ; Further assume stride is positive. sequence produces a list of numbers from low to high (including
 ; low and possibly high) separated by stride and in sorted order. Sample solution: 4 lines. Examples:
@@ -14,6 +15,6 @@
 ;          (sequence 3 8 3)   '(3 6)
 ;          (sequence 3 2 1)   '()
 (define (sequence low high stride)
-  (if (> low high) 
-      null
-      (cons low (sequence (+ low stride) high stride))))
+  (cond
+    [(> low high) null]
+    [#t (cons low (sequence (+ low stride) high stride))]))

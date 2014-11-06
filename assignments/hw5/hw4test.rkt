@@ -25,10 +25,16 @@
    (check-equal? (sequence 3 2 1)  '( )          "sequence test #3")
    
    ; string-append-map test
-   ;   (check-equal? (string-append-map 
-   ;                  (list "dan" "dog" "curry" "dog2") 
-   ;                  ".jpg") '("dan.jpg" "dog.jpg" "curry.jpg" "dog2.jpg") "string-append-map test")
-   ;   
+   (check-equal? (string-append-map 
+                  (list "dan" "dog" "curry" "dog2") 
+                  ".jpg") '("dan.jpg" "dog.jpg" "curry.jpg" "dog2.jpg") "string-append-map test")
+   (check-equal? (string-append-map '("abc") "") 
+                 '("abc") "string-append-map test #1")
+   (check-equal? (string-append-map '() ".jpg") 
+                 '() "string-append-map test #2")
+   (check-equal? (string-append-map '("dog") ".jpg")
+                 '("dog.jpg") "string-append-map #3")
+   
    ; list-nth-mod test
    ;   (check-equal? (list-nth-mod (list 0 1 2 3 4) 2) 2 "list-nth-mod test")
    ;   

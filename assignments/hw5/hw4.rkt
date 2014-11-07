@@ -110,7 +110,7 @@
   (lambda () (th 0)))
 
 
-; problem 8
+; problem 9
 ;
 ; Write a function vector-assoc that takes a value v and a vector vec. It should behave like Racket's
 ; assoc library function except (1) it processes a vector (Racket's name for an array) instead of a list,
@@ -127,3 +127,40 @@
                 [(equal? v (car elem)) elem]
                 [#t (iter (+ n 1))]))))
   (iter 0))
+
+
+; problem 10
+;
+; Write a function cached-assoc that takes a list xs and a number n and returns a function that takes one
+; argument v and returns the same thing that (assoc v xs) would return. However, you should use an n-element
+; cache of recent results to possibly make this function faster than just calling assoc (if xs is long and a
+; few elements are returned often). The cache must be a Racket vector of length n that is created by the call
+; to cached-assoc (use Racket library function vector or make-vector) and used-and-possibly-mutated each time
+; the function returned by cached-assoc is called. Assume n is positive.
+;
+; The cache starts empty (all elements #f). When the function returned by cached-assoc is called, it first
+; checks the cache for the answer. If it is not there, it uses assoc and xs to get the answer and if the
+; result is not #f (i.e., xs has a pair that matches), it adds the pair to the cache before returning (using
+; vector-set!). The cache slots are used in a round-robin fashion: the fist time a pair is added to the cache
+; it is put in position 0, the next pair is put in position 1, etc. up to position n - 1 and then back to
+; position 0 (replacing the pair already there), then position 1, etc.
+;
+; Hints:
+;
+;    - In addition to a variable for holding the vector whose contents you mutate with vector-set!, use a
+;      second variable to keep track of which cache slot will be replaced next. After modifying the cache,
+;      increment this variable (with set! ) or set it back to 0.
+;    - To test your cache, it can be useful to add print expressions so you know when you are using the
+;      cache and when you are not. But remove these print expressions before submitting your code.
+;    - Sample solution is 15 lines
+(define (cached-assoc xs n)
+  (let* ([memo (make-vector n #f)]
+         [next 0]
+         [f (lambda (v)
+              (cond [(vector-assoc v memo) (vector-assoc v memo)]
+                    [(assoc v xs) (begin
+                                    (vector-set! memo next (assoc v xs))
+                                    (set! next (remainder (+ next 1) n))
+                                    (assoc v xs))]
+                    [#t #f]))])
+    f))

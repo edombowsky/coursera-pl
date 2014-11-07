@@ -21,6 +21,10 @@
 
 (define vec '((1 . "a") (2 . "b") (3 . "c") (4 . "d") (5 . "e")))
 
+(define ctf (cached-assoc '((1 . 2) (3 . 4) (5 . 6) (7 . 8) (9 . 10)) 3 ))
+
+
+;; Tests
 (define tests
   (test-suite
    "Sample tests for Assignment 4"
@@ -127,7 +131,12 @@
                  (cons 3 7) "vector-assoc test #6")
    
    ; cached-assoc tests
-   ;   (check-equal? ((cached-assoc (list (cons 1 2) (cons 3 4)) 3) 3) (cons 3 4) "cached-assoc test")
+   (check-equal? ((cached-assoc (list (cons 1 2) (cons 3 4)) 3) 3) (cons 3 4) "cached-assoc test")
+   
+   (check-equal? (ctf 3) (cons 3 4) "cached-assoc test #1")
+   (check-equal? (ctf 5) (cons 5 6) "cached-assoc test #2")
+   (check-equal? (ctf 9) (cons 9 10) "cached-assoc test #3")
+   (check-equal? (ctf 11) #f "cached-assoc test #4")
    
    ; while-less test
    ;   (check-equal? (while-less 7 do (begin (set! a (+ a 1)) a)) #t "while-less test")

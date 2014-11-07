@@ -139,7 +139,7 @@
    (check-equal? (ctf 11) #f "cached-assoc test #4")
    
    ; while-less test
-   ;   (check-equal? (while-less 7 do (begin (set! a (+ a 1)) a)) #t "while-less test")
+   (check-equal? (while-less 7 do (begin (set! a (+ a 1)) a)) #t "while-less test")
    
    ))
 

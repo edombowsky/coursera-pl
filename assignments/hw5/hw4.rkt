@@ -164,3 +164,34 @@
                                     (assoc v xs))]
                     [#t #f]))])
     f))
+
+
+; problem 11 (Challenge Problem:)
+;
+; Define a macro that is used like (while-less e1 do e2) where e1 and e2 are expressions and while-less
+; and do are syntax (keywords). The macro should do the following:
+;
+;     - It evaluates e1 exactly once.
+;     - It evaluates e2 at least once.
+;     - It keeps evaluating e2 until and only until the result is not a number less than the result
+;       of the evaluation of e1.
+;     - Assuming evaluation terminates, the result is #t.
+;     - Assume e1 and e2 produce numbers; your macro can do anything or fail mysteriously otherwise.
+;
+; Hint: Define and use a recursive thunk. Sample solution is 9 lines. Example:
+;
+;     (define a 2)
+;     (while-less 7 do (begin (set! a (+ a 1)) (print "x") a))
+;     (while-less 7 do (begin (set! a (+ a 1)) (print "x") a))
+;
+; Evaluating the second line will print "x" 5 times and change a to be 7. So evaluating the third line
+; will print "x" 1 time and change a to be 8.
+(define-syntax while-less 
+  (syntax-rules (do)
+    [(while-less e1 do e2)
+     (letrec ([a e1]
+              [f (lambda ()
+                   (if (>= e2 a)
+                       #t
+                       (f)))])
+       (f))]))

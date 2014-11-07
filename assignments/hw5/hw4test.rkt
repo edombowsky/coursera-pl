@@ -19,6 +19,7 @@
     (cons x (lambda ( ) (th (+ x 1)))))
   (th 1))
 
+(define vec '((1 . "a") (2 . "b") (3 . "c") (4 . "d") (5 . "e")))
 
 (define tests
   (test-suite
@@ -110,7 +111,20 @@
                  "cycle-lists test #2")
    
    ; vector-assoc test
-   ;   (check-equal? (vector-assoc 4 (vector (cons 2 1) (cons 3 1) (cons 4 1) (cons 5 1))) (cons 4 1) "vector-assoc test")
+   (check-equal? (vector-assoc 4 (vector (cons 2 1) (cons 3 1) (cons 4 1) (cons 5 1))) (cons 4 1) "vector-assoc test")
+   
+   (check-equal? (vector-assoc 5 (list->vector vec))
+                 (cons 5 "e") "vector-assoc test #1")
+   (check-equal? (vector-assoc 3 (list->vector vec))
+                 (cons 3 "c") "vector-assoc test #2")
+   (check-equal? (vector-assoc 6 (list->vector vec))
+                 #f "vector-assoc test #3")
+   (check-equal? (vector-assoc 5 (list->vector '(1 2 3 4 5)))
+                 #f "vector-assoc test #4")
+   (check-equal? (vector-assoc 7 (list->vector '(1 2 3 4 5 (7 . 8))))
+                 (cons 7 8) "vector-assoc test #5")
+   (check-equal? (vector-assoc 3 (list->vector '(1 2 (3 . 7) 4 5 (7 . 8))))
+                 (cons 3 7) "vector-assoc test #6")
    
    ; cached-assoc tests
    ;   (check-equal? ((cached-assoc (list (cons 1 2) (cons 3 4)) 3) 3) (cons 3 4) "cached-assoc test")

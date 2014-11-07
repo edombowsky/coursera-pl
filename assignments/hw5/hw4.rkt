@@ -108,3 +108,22 @@
                 (list-nth-mod ys n))
           (lambda () (th (+ n 1)))))
   (lambda () (th 0)))
+
+
+; problem 8
+;
+; Write a function vector-assoc that takes a value v and a vector vec. It should behave like Racket's
+; assoc library function except (1) it processes a vector (Racket's name for an array) instead of a list,
+; (2) it allows vector elements not to be pairs in which case it skips them, and (3) it always takes exactly
+; two arguments. Process the vector elements in order starting from 0. You must use library functions
+; vector-length, vector-ref, and equal?. Return #f if no vector element is a pair with a car field equal
+; to v, else return the first pair with an equal car field. Sample solution is 9 lines, using one local
+; recursive helper function.
+(define (vector-assoc v vec)
+  (define (iter n)
+    (if (= n (vector-length vec)) #f
+        (let ([elem (vector-ref vec n)])
+          (cond [(not (pair? elem)) (iter (+ n 1))]
+                [(equal? v (car elem)) elem]
+                [#t (iter (+ n 1))]))))
+  (iter 0))

@@ -86,11 +86,28 @@
                  '("dan.jpg" "dog.jpg") "dan-then-dog test #3")
    
    ; stream-add-zero test
-   ;   (check-equal? (stream-for-n-steps (stream-add-zero ones) 1) (list (cons 0 1)) "stream-add-zero test")
+   (check-equal? (stream-for-n-steps (stream-add-zero ones) 1) (list (cons 0 1)) "stream-add-zero test")
+   
+   (check-equal? (stream-for-n-steps (stream-add-zero dan-then-dog) 2)
+                 '((0 . "dan.jpg") (0 . "dog.jpg"))
+                 "stream-add-zero test #1")
+   (check-equal? (stream-for-n-steps (stream-add-zero dan-then-dog) 4)
+                 '((0 . "dan.jpg") (0 . "dog.jpg") (0 . "dan.jpg") (0 . "dog.jpg"))
+                 "stream-add-zero test #2")
+   (check-equal? (stream-for-n-steps (stream-add-zero dan-then-dog) 0)
+                 '( ) "stream-add-zero test #3")
+   
    
    ; cycle-lists test
-   ;   (check-equal? (stream-for-n-steps (cycle-lists (list 1 2 3) (list "a" "b")) 3) (list (cons 1 "a") (cons 2 "b") (cons 3 "a")) 
-   ;                 "cycle-lists test")
+   (check-equal? (stream-for-n-steps (cycle-lists (list 1 2 3) (list "a" "b")) 3) (list (cons 1 "a") (cons 2 "b") (cons 3 "a")) 
+                 "cycle-lists test")
+   
+   (check-equal? (stream-for-n-steps (cycle-lists '(1 2 3) '("a" "b")) 4)
+                 '((1 . "a") (2 . "b") (3 . "a") (1 . "b"))
+                 "cycle-lists test #1")
+   (check-equal? (stream-for-n-steps (cycle-lists '(1 2 3 4) '(5 6 7)) 6)
+                 '((1 . 5) (2 . 6) (3 . 7) (4 . 5) (1 . 6) (2 . 7))
+                 "cycle-lists test #2")
    
    ; vector-assoc test
    ;   (check-equal? (vector-assoc 4 (vector (cons 2 1) (cons 3 1) (cons 4 1) (cons 5 1))) (cons 4 1) "vector-assoc test")

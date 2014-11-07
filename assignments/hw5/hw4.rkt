@@ -28,3 +28,15 @@
 ; functions map and string-append. Sample solution: 2 lines.
 (define (string-append-map strings suffix)
   (map (lambda (str) (string-append str suffix)) strings))
+
+; problem 3
+; 
+; Write a function list-nth-mod that takes a list xs and a number n . If the number is negative, terminate
+; the computation with (error "list-nth-mod: negative number"). Else if the list is empty, terminate the
+; computation with (error "list-nth-mod: empty list"). Else return the ith element of the list where we
+; count from zero and i is the remainder produced when dividing n by the list's length. Library functions
+; length, remainder, car, and list-tail are all useful - see the Racket documentation. Sample solution is 6 lines
+(define (list-nth-mod xs n)
+  (cond [(negative? n) (error "list-nth-mod: negative number")]
+        [(null? xs) (error "list-nth-mod: empty list")]
+        [#t (car (list-tail xs (remainder n (length xs))))]))

@@ -2,7 +2,8 @@
 
 ;; Programming Languages Homework4 Simple Test
 ;; Save this file to the same directory as your homework file
-;; These are basic tests. Passing these tests does not guarantee that your code will pass the actual homework grader
+;; These are basic tests. Passing these tests does not guarantee that your code will pass 
+;; the actual homework grader
 
 ;; Be sure to put your homework file in the same folder as this test file.
 ;; Uncomment the line below and change HOMEWORK_FILE to the name of your homework file.
@@ -36,7 +37,18 @@
                  '("dog.jpg") "string-append-map #3")
    
    ; list-nth-mod test
-   ;   (check-equal? (list-nth-mod (list 0 1 2 3 4) 2) 2 "list-nth-mod test")
+   (check-equal? (list-nth-mod (list 0 1 2 3 4) 2) 2 "list-nth-mod test")
+   
+   (check-equal? (list-nth-mod '("a" "b" "c") 0) "a" "list-nth-mod #1")
+   (check-equal? (list-nth-mod '("a" "b" "c") 2) "c" "list-nth-mod #2")
+   (check-equal? (list-nth-mod '("a" "b" "c") 4) "b" "list-nth-mod #3")
+   (check-exn (regexp "list-nth-mod: negative number")
+              (lambda ( ) (list-nth-mod '("a" "b" "c") -1))
+              "error 'list-nth-mod: negative number' not thrown #4")
+   (check-exn (regexp "list-nth-mod: empty list")
+              (lambda ( ) (list-nth-mod '() 0))
+              "error 'list-nth-mod: empty list' not thrown #5")
+   
    ;   
    ; stream-for-n-steps test
    ;   (check-equal? (stream-for-n-steps (lambda () (cons 1 ones)) 1) (list 1) "stream-for-n-steps test")

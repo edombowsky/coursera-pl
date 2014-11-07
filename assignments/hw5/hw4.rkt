@@ -29,6 +29,7 @@
 (define (string-append-map strings suffix)
   (map (lambda (str) (string-append str suffix)) strings))
 
+
 ; problem 3
 ; 
 ; Write a function list-nth-mod that takes a list xs and a number n . If the number is negative, terminate
@@ -41,7 +42,8 @@
         [(null? xs) (error "list-nth-mod: empty list")]
         [#t (car (list-tail xs (remainder n (length xs))))]))
 
-; problem 4;
+
+; problem 4
 ;
 ; Write a function stream-for-n-steps that takes a stream s and a number n. It returns a list holding
 ; the first n values produced by s in order. Assume n is non-negative. Sample solution: 5 lines. Note:
@@ -49,3 +51,16 @@
 (define (stream-for-n-steps s n)
   (if (<= n 0) null
       (cons (car (s)) (stream-for-n-steps (cdr (s)) (- n 1)))))
+
+
+; problem 5
+;
+; Write a stream funny-number-stream that is like the stream of natural numbers (i.e., 1, 2, 3, ...)
+; except numbers divisble by 5 are negated (i.e., 1, 2, 3, 4, -5, 6, 7, 8, 9, -10, 11, ...). Remember a
+; stream is a thunk that when called produces a pair. Here the car of the pair will be a number and the
+; cdr will be another stream.
+(define (funny-number-stream)
+  (define (th x)
+    (cons (if (= 0 (remainder x 5)) (- x) x)
+          (lambda ( ) (th (+ x 1)))))
+  (th 1))

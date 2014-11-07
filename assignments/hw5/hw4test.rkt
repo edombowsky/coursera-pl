@@ -45,9 +45,9 @@
    ; list-nth-mod test
    (check-equal? (list-nth-mod (list 0 1 2 3 4) 2) 2 "list-nth-mod test")
    
-   (check-equal? (list-nth-mod '("a" "b" "c") 0) "a" "list-nth-mod #1")
-   (check-equal? (list-nth-mod '("a" "b" "c") 2) "c" "list-nth-mod #2")
-   (check-equal? (list-nth-mod '("a" "b" "c") 4) "b" "list-nth-mod #3")
+   (check-equal? (list-nth-mod '("a" "b" "c") 0) "a" "list-nth-mod test #1")
+   (check-equal? (list-nth-mod '("a" "b" "c") 2) "c" "list-nth-mod test #2")
+   (check-equal? (list-nth-mod '("a" "b" "c") 4) "b" "list-nth-mod test #3")
    (check-exn (regexp "list-nth-mod: negative number")
               (lambda () (list-nth-mod '("a" "b" "c") -1))
               "error 'list-nth-mod: negative number' not thrown #4")
@@ -60,9 +60,9 @@
    (check-equal? (stream-for-n-steps (lambda () (cons 1 ones)) 1) (list 1) "stream-for-n-steps test")
    
    (check-equal? (stream-for-n-steps natural-numbers 5)
-                 '(1 2 3 4 5) "stream-for-n-steps #1")
+                 '(1 2 3 4 5) "stream-for-n-steps test #1")
    (check-equal? (stream-for-n-steps natural-numbers 10)
-                 '(1 2 3 4 5 6 7 8 9 10) "stream-for-n-steps #2")
+                 '(1 2 3 4 5 6 7 8 9 10) "stream-for-n-steps test #2")
    
    
    ; funny-number-stream test
@@ -70,12 +70,20 @@
                  (list 1 2 3 4 -5 6 7 8 9 -10 11 12 13 14 -15 16) "funny-number-stream test")
    
    (check-equal? (stream-for-n-steps funny-number-stream 0)
-                 '() "funny-number-stream #1")
+                 '() "funny-number-stream test #1")
    (check-equal? (stream-for-n-steps funny-number-stream 1)
-                 '(1) "funny-number-stream #2")
+                 '(1) "funny-number-stream test #2")
    
    ; dan-then-dog test
-   ;   (check-equal? (stream-for-n-steps dan-then-dog 1) (list "dan.jpg") "dan-then-dog test")
+   (check-equal? (stream-for-n-steps dan-then-dog 1) (list "dan.jpg") "dan-then-dog test")
+   
+   (check-equal? (stream-for-n-steps dan-then-dog 4)
+                 '("dan.jpg" "dog.jpg" "dan.jpg" "dog.jpg")
+                 "dan-then-dog test #1")
+   (check-equal? (stream-for-n-steps dan-then-dog 1)
+                 '("dan.jpg") "dan-then-dog test #2")
+   (check-equal? (stream-for-n-steps dan-then-dog 2)
+                 '("dan.jpg" "dog.jpg") "dan-then-dog test #3")
    
    ; stream-add-zero test
    ;   (check-equal? (stream-for-n-steps (stream-add-zero ones) 1) (list (cons 0 1)) "stream-add-zero test")

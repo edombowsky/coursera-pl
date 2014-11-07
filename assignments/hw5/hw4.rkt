@@ -64,3 +64,16 @@
     (cons (if (= 0 (remainder x 5)) (- x) x)
           (lambda ( ) (th (+ x 1)))))
   (th 1))
+
+
+; problem 6
+;
+; Write a stream dan-then-dog, where the elements of the stream alternate between the strings "dan.jpg"
+; and "dog.jpg" (starting with "dan.jpg"). More specifcally, dan-then-dog should be a thunk that when
+; called produces a pair of "dan.jpg" and a thunk that when called produces a pair of "dog.jpg" and a
+; thunk that when called... etc. Sample solution: 4 lines.
+(define (dan-then-dog)
+  (define (th x)
+    (cons (if (even? x) "dog.jpg" "dan.jpg")
+          (lambda ( ) (th (+ x 1)))))
+  (th 1))

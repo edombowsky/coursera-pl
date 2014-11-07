@@ -77,3 +77,16 @@
     (cons (if (even? x) "dog.jpg" "dan.jpg")
           (lambda ( ) (th (+ x 1)))))
   (th 1))
+
+
+; problem 7
+;
+; Write a function stream-add-zero that takes a stream s and returns another stream. If s would produce
+; v for its ith element, then (stream-add-zero s) would produce the pair (0 . v) for its ith element. 
+; Sample solution: 4 lines. Hint: Use a thunk that when called uses s and recursion. Note: One of the
+; provided tests in the file using graphics uses (stream-add-zero dan-then-dog) with place-repeatedly.
+(define (stream-add-zero s)
+  (define (th x)
+    (cons (cons 0 (car (x)))
+          (lambda () (th (cdr (x))))))
+  (lambda () (th s)))

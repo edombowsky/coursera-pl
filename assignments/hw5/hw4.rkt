@@ -40,3 +40,12 @@
   (cond [(negative? n) (error "list-nth-mod: negative number")]
         [(null? xs) (error "list-nth-mod: empty list")]
         [#t (car (list-tail xs (remainder n (length xs))))]))
+
+; problem 4;
+;
+; Write a function stream-for-n-steps that takes a stream s and a number n. It returns a list holding
+; the first n values produced by s in order. Assume n is non-negative. Sample solution: 5 lines. Note:
+; You can test your streams with this function instead of the graphics code.
+(define (stream-for-n-steps s n)
+  (if (<= n 0) null
+      (cons (car (s)) (stream-for-n-steps (cdr (s)) (- n 1)))))

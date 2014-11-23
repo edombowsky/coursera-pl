@@ -61,7 +61,7 @@ class MyBoard < Board
   end
 
   def cheat_next
-    if @score > @cheat_cost and !@cheat
+    if @score >= @cheat_cost and !@cheat
       @score -= @cheat_cost
       @cheat = true
     end
